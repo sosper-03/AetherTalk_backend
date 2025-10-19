@@ -1,0 +1,72 @@
+{application, aethertalk, [
+    {description, "AetherTalk - Enterprise WhatsApp-like Messaging Platform"},
+    {vsn, "1.0.0"},
+    {registered, [
+        aethertalk_sup,
+        aethertalk_user_manager,
+        aethertalk_message_router,
+        aethertalk_presence_manager,
+        aethertalk_call_manager,
+        aethertalk_media_processor,
+        aethertalk_translation_service,
+        aethertalk_notification_service
+    ]},
+    {mod, {aethertalk_app, []}},
+    {applications, [
+        kernel,
+        stdlib,
+        sasl,
+        crypto,
+        ssl,
+        public_key,
+        inets,
+        asn1,
+        runtime_tools,
+        observer,
+        mnesia,
+        cowboy,
+        jsx,
+        poolboy,
+        epgsql,
+        eredis,
+        uuid,
+        bcrypt,
+        jose,
+        gun,
+        hackney,
+        lager,
+        recon,
+        ranch,
+        jiffy,
+        gen_smtp,
+        erlcloud,
+        emqtt
+    ]},
+    {env, [
+        {http_port, 8080},
+        {https_port, 8443},
+        {websocket_port, 8081},
+        {max_connections, 10000},
+        {database_pool_size, 20},
+        {redis_pool_size, 10},
+        {media_storage_path, "./media"},
+        {encryption_key, <<"default_key_change_in_production">>},
+        {jwt_secret, <<"jwt_secret_change_in_production">>},
+        {translation_api_key, undefined},
+        {aws_access_key, undefined},
+        {aws_secret_key, undefined},
+        {aws_region, "us-east-1"},
+        {stun_servers, [
+            "stun:stun.l.google.com:19302",
+            "stun:stun1.l.google.com:19302"
+        ]},
+        {turn_servers, []},
+        {max_file_size, 104857600}, % 100MB
+        {supported_languages, [
+            "en", "es", "fr", "de", "it", "pt", "ru", "zh", "ja", "ko", "ar", "hi"
+        ]}
+    ]},
+    {modules, []},
+    {licenses, ["Apache-2.0"]},
+    {links, [{"GitHub", "https://github.com/aethertalk/aethertalk"}]}
+ ]}.

@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: aethertalk_postgres
+    environment:
+      POSTGRES_DB: aethertalk
+      POSTGRES_USER: aethertalk
+      POSTGRES_PASSWORD: aethertalk_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./priv/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aethertalk"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: aethertalk_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # AetherTalk Application
+  aethertalk:
+    build: .
+    container_name: aethertalk_app
+    ports:
+      - "8080:8080"  # HTTP API
+      - "8081:8081"  # WebSocket
+    environment:
+      AETHERTALK_DB_HOST: postgres
+      AETHERTALK_DB_PORT: 5432
+      AETHERTALK_DB_NAME: aethertalk
+      AETHERTALK_DB_USER: aethertalk
+      AETHERTALK_DB_PASS: aethertalk_password
+      AETHERTALK_REDIS_HOST: redis
+      AETHERTALK_REDIS_PORT: 6379
+      AETHERTALK_HTTP_PORT: 8080
+      AETHERTALK_WS_PORT: 8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+  redis_data:

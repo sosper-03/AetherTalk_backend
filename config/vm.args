@@ -1,0 +1,141 @@
+## Name of the node
+-name aethertalk@127.0.0.1
+
+## Cookie for distributed erlang
+-setcookie aethertalk_cookie
+
+## Heartbeat management; auto-restarts VM if it dies or becomes unresponsive
+## (Disabled by default..use with caution!)
+##-heart
+
+## Enable kernel poll and a few async threads
++K true
++A 30
+
+## Increase number of concurrent ports/sockets
+-env ERL_MAX_PORTS 65536
+
+## Tweak GC to run more often
+-env ERL_FULLSWEEP_AFTER 10
+
+## Set the location of crash dumps
+-env ERL_CRASH_DUMP ./logs/erl_crash.dump
+
+## Set the maximum number of atoms
++t 1048576
+
+## Set scheduler bind type
++sbt db
+
+## Set scheduler utilization balancing
++sub true
+
+## Set dirty scheduler threads
++SDcpu 8:8
++SDio 8
+
+## Memory management
++hms 8192
++hmbs 8192
+
+## Enable SMP support
+-smp enable
+
+## Set the distribution buffer busy limit
++zdbbl 32768
+
+## Set the maximum number of ETS tables
++e 256000
+
+## Enable time correction
++c true
+
+## Set the time warp mode
++C multi_time_warp
+
+## Set the time offset
++T 15
+
+## Enable dirty scheduler online
++scl false
+
+## Set the number of scheduler threads
++S 4:4
+
+## Set the maximum number of processes
++P 2097152
+
+## Set the maximum number of atoms in the atom table
++t 2097152
+
+## Set the size of the atom table
++h 2097152
+
+## Enable or disable the kernel poll
++K true
+
+## Set the async thread pool size
++A 128
+
+## Set the distribution port range
+-kernel inet_dist_listen_min 9100
+-kernel inet_dist_listen_max 9200
+
+## Set the net tick time
+-kernel net_ticktime 60
+
+## Set the distribution buffer size
+-kernel dist_buf_size 32768
+
+## Enable EPMD daemon
+-start_epmd true
+
+## Set the EPMD port
+-epmd_port 4369
+
+## Set the logger level
+-kernel logger_level info
+
+## Set the error logger type
+-kernel error_logger tty
+
+## Set the global name server
+-kernel global_name_server true
+
+## Set the inet configuration
+-kernel inet_default_connect_options [{nodelay, true}, {keepalive, true}]
+-kernel inet_default_listen_options [{nodelay, true}, {keepalive, true}, {reuseaddr, true}]
+
+## SSL configuration
+-ssl session_lifetime 600
+-ssl session_cache_client_max 1000
+-ssl session_cache_server_max 1000
+
+## Mnesia configuration
+-mnesia dir '"./data/mnesia"'
+-mnesia dump_log_write_threshold 50000
+-mnesia dc_dump_limit 40
+
+## SASL configuration
+-sasl sasl_error_logger '{file,"./logs/sasl-error.log"}'
+-sasl errlog_type error
+
+## Set the boot file
+## -boot start_sasl
+
+## Set the configuration file
+## -config ./config/sys.config
+
+## Set the arguments file
+## -args_file ./config/vm.args
+
+## Enable or disable the shell
+## -noshell
+## -noinput
+
+## Set the working directory
+## -env PWD /path/to/working/directory
+
+## Set environment variables
+-env AETHERTALK_ENV development
+-env AETHERTALK_LOG_LEVEL info

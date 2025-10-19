@@ -1,0 +1,78 @@
+# Erlang/OTP build artifacts
+.rebar3
+_build
+_checkouts
+_vendor
+.eunit
+*.o
+*.beam
+*.plt
+*.swp
+*.swo
+.erlang.cookie
+ebin
+log
+erl_crash.dump
+.rebar
+logs
+.idea
+*.iml
+rebar3.crashdump
+*~
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# IDE files
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Coverage reports
+cover/
+.cover/
+
+# Documentation
+doc/
+docs/_build/
+
+# Release artifacts
+rel/
+releases/
+
+# Dependencies
+deps/
+
+# Media uploads (in development)
+priv/media/
+uploads/
+
+# SSL certificates (should be managed separately)
+*.pem
+*.key
+*.crt
+*.csr
+
+# Configuration with secrets (use environment variables instead)
+config/prod.config
+config/secrets.config
+
+# Docker volumes
+postgres_data/
+redis_data/
