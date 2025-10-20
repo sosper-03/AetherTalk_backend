@@ -1,0 +1,67 @@
+Starting AetherTalk application
+Created media directory: ./media
+Created media directory: ./media/images
+Created media directory: ./media/videos
+Created media directory: ./media/audio
+Created media directory: ./media/documents
+Created media directory: ./media/thumbnails
+Created media directory: ./media/temp
+Configuration manager started
+Metrics collector started
+Health check service started
+Rate limiter started
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Database worker connected successfully
+Redis worker connected successfully
+Redis worker connected successfully
+Redis worker connected successfully
+Redis worker connected successfully
+Redis worker connected successfully
+Redis worker connected successfully
+Redis worker connected successfully
+Redis worker connected successfully
+Redis worker connected successfully
+Redis worker connected successfully
+Database schema manager started
+Database migration manager started
+User manager started
+Message router started
+Presence manager started
+Call manager started
+Media processor started
+Translation service started with providers: [libre]
+Notification service started
+Group Manager started
+Status Manager started
+Reactions Manager started
+Polls Manager started
+Disappearing Messages service started
+Location Service started
+Encryption service started
+MFA service started
+Failed to start AetherTalk application: {error,
+                                         {shutdown,
+                                          {failed_to_start_child,
+                                           aethertalk_api_sup,
+                                           {shutdown,
+                                            {failed_to_start_child,
+                                             aethertalk_http_listener,
+                                             eaddrinuse}}}}}

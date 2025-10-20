@@ -40,7 +40,7 @@ init([]) ->
     TypingTable = ets:new(typing_status, [set, public, named_table, {read_concurrency, true}]),
     SubscriptionsTable = ets:new(presence_subscriptions, [bag, public, named_table, {read_concurrency, true}]),
     
-    lager:info("Presence manager started"),
+    io:format("Presence manager started~n"),
     {ok, #state{
         presence_table = PresenceTable,
         typing_table = TypingTable,
@@ -165,7 +165,7 @@ do_update_presence(UserId, IsOnline, #state{presence_table = PT}) ->
     % Broadcast to subscribers
     broadcast_presence_update(UserId, PresenceData),
     
-    lager:debug("Updated presence for user ~p: ~p", [UserId, IsOnline]),
+    io:format("Updated presence for user ~p: ~p~n", [UserId, IsOnline]),
     ok.
 
 do_get_user_presence(UserId, #state{presence_table = PT}) ->

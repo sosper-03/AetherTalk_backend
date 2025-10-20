@@ -95,7 +95,7 @@ verify_mfa_challenge(UserId, Method, Code) ->
 %% ===================================================================
 
 init([]) ->
-    lager:info("MFA service started"),
+    io:format("MFA service started~n"),
     
     % Set up cleanup timer for expired SMS codes
     {ok, Timer} = timer:apply_interval(300000, ?MODULE, cleanup_expired_sms_codes, []),
@@ -296,7 +296,7 @@ do_send_sms_code(UserId) ->
                                 expires_at => ExpiresAt
                             }};
                         {error, Reason} ->
-                            lager:error("Failed to send SMS to ~p: ~p", [PhoneNumber, Reason]),
+                            io:format("Failed to send SMS to ~p: ~p~n", [PhoneNumber, Reason]),
                             {error, sms_send_failed}
                     end;
                 {error, Reason} ->
@@ -547,7 +547,7 @@ send_sms_message(PhoneNumber, Code) ->
     ]),
     
     % For now, just log the message (replace with actual SMS service)
-    lager:info("SMS to ~p: ~p", [PhoneNumber, Message]),
+    io:format("SMS to ~p: ~p~n", [PhoneNumber, Message]),
     ok.
 
 mask_phone_number(PhoneNumber) ->
@@ -562,7 +562,7 @@ mask_phone_number(PhoneNumber) ->
     end.
 
 log_mfa_event(UserId, Event, Result) ->
-    lager:info("MFA event - User: ~p, Event: ~p, Result: ~p", [UserId, Event, Result]),
+    io:format("MFA event - User: ~p, Event: ~p, Result: ~p~n", [UserId, Event, Result]),
     
     % Store in database for audit
     SQL = "INSERT INTO mfa_audit_log (user_id, event_type, result, created_at) 
@@ -578,7 +578,7 @@ cleanup_expired_sms_codes() ->
     
     case aethertalk_db:query(SQL, []) of
         {ok, Count} when Count > 0 ->
-            lager:info("Cleaned up ~p expired SMS codes", [Count]);
+            io:format("Cleaned up ~p expired SMS codes~n", [Count]);
         _ ->
             ok
     end.

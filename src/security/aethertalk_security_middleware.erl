@@ -81,12 +81,12 @@ execute(Req, Env) ->
             {ok, SecureReq} ->
                 {ok, SecureReq, Env};
             {error, Reason, ErrorReq} ->
-                lager:warning("Security middleware blocked request: ~p", [Reason]),
+                io:format("Security middleware blocked request: ~p~n", [Reason]),
                 {stop, ErrorReq}
         end
     catch
         error:Error ->
-            lager:error("Security middleware error: ~p", [Error]),
+            io:format("Security middleware error: ~p~n", [Error]),
             ErrorResp = jiffy:encode(#{
                 error => <<"Internal security error">>,
                 message => <<"Request could not be processed">>
@@ -103,7 +103,7 @@ execute(Req, Env) ->
 
 %% @doc Initialize security subsystem
 init_security() ->
-    lager:info("Initializing AetherTalk security middleware"),
+    io:format("Initializing AetherTalk security middleware~n"),
     
     % Ensure all security services are running
     SecurityServices = [
@@ -115,9 +115,9 @@ init_security() ->
     lists:foreach(fun(Service) ->
         case whereis(Service) of
             undefined ->
-                lager:error("Security service ~p not running", [Service]);
+                io:format("Security service ~p not running~n", [Service]);
             _Pid ->
-                lager:info("Security service ~p is running", [Service])
+                io:format("Security service ~p is running~n", [Service])
         end
     end, SecurityServices),
     

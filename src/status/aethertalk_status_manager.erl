@@ -74,7 +74,7 @@ cleanup_expired_statuses() ->
 %% ===================================================================
 
 init([]) ->
-    lager:info("Status Manager started"),
+    io:format("Status Manager started~n"),
     
     % Set up cleanup timer (every hour)
     {ok, Timer} = timer:apply_interval(3600000, ?MODULE, cleanup_expired_statuses, []),
@@ -359,10 +359,10 @@ do_cleanup_expired_statuses() ->
     
     case aethertalk_db:query(SQL, []) of
         {ok, Count} ->
-            lager:info("Cleaned up ~p expired statuses", [Count]),
+            io:format("Cleaned up ~p expired statuses~n", [Count]),
             ok;
         {error, Reason} ->
-            lager:error("Failed to cleanup expired statuses: ~p", [Reason]),
+            io:format("Failed to cleanup expired statuses: ~p~n", [Reason]),
             {error, Reason}
     end.
 
@@ -378,7 +378,7 @@ calculate_expiry_time() ->
 %% Notification functions
 
 notify_status_created(UserId, StatusId) ->
-    lager:info("Status created by user ~p: ~p", [UserId, StatusId]),
+    io:format("Status created by user ~p: ~p~n", [UserId, StatusId]),
     % Here you would integrate with WebSocket manager to notify contacts
     spawn(fun() ->
         case aethertalk_user_manager:get_user_contacts(UserId) of
@@ -399,7 +399,7 @@ notify_status_created(UserId, StatusId) ->
     end).
 
 notify_status_viewed(StatusOwnerId, StatusId, ViewerId) ->
-    lager:info("Status ~p viewed by user ~p", [StatusId, ViewerId]),
+    io:format("Status ~p viewed by user ~p~n", [StatusId, ViewerId]),
     % Notify status owner about the view
     spawn(fun() ->
         Notification = #{
@@ -412,4 +412,4 @@ notify_status_viewed(StatusOwnerId, StatusId, ViewerId) ->
     end).
 
 notify_status_deleted(UserId, StatusId) ->
-    lager:info("Status deleted by user ~p: ~p", [UserId, StatusId]).
+    io:format("Status deleted by user ~p: ~p~n", [UserId, StatusId]).

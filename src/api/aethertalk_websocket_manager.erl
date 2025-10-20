@@ -57,7 +57,7 @@ init([]) ->
     % Schedule periodic cleanup
     erlang:send_after(60000, self(), cleanup_stale_connections), % 1 minute
     
-    lager:info("WebSocket manager started"),
+    io:format("WebSocket manager started~n"),
     {ok, #state{
         connections_table = ConnectionsTable,
         user_connections_table = UserConnectionsTable,
@@ -195,7 +195,7 @@ do_register_connection(ConnectionPid, UserId, SessionData,
     % Update user presence
     aethertalk_presence_manager:update_presence(UserId, true),
     
-    lager:info("Registered WebSocket connection for user ~p", [UserId]),
+    io:format("Registered WebSocket connection for user ~p~n", [UserId]),
     ok.
 
 do_unregister_connection(ConnectionPid, 
@@ -230,7 +230,7 @@ do_unregister_connection(ConnectionPid,
                     ok
             end,
             
-            lager:info("Unregistered WebSocket connection for user ~p", [UserId]),
+            io:format("Unregistered WebSocket connection for user ~p~n", [UserId]),
             ok;
         [] ->
             ok
@@ -359,7 +359,7 @@ do_cleanup_stale_connections(#state{connections_table = CT}) ->
     
     case length(StaleConnections) of
         0 -> ok;
-        Count -> lager:info("Cleaned up ~p stale WebSocket connections", [Count])
+        Count -> io:format("Cleaned up ~p stale WebSocket connections~n", [Count])
     end.
 
 %% Helper functions for connection management

@@ -126,7 +126,7 @@ init([]) ->
         heartbeat_interval = ?HEARTBEAT_INTERVAL
     },
     
-    lager:info("Cluster manager started on node ~p", [NodeName]),
+    io:format("Cluster manager started on node ~p~n", [NodeName]),
     {ok, State}.
 
 handle_call({join_cluster, TargetNode}, _From, State) ->
@@ -174,7 +174,7 @@ handle_call({register_service, ServiceName, ServiceData}, _From, State) ->
     % Broadcast service registration to cluster
     broadcast_to_cluster({service_registered, node(), ServiceName, ServiceData}, State),
     
-    lager:info("Registered service ~p on node ~p", [ServiceName, node()]),
+    io:format("Registered service ~p on node ~p~n", [ServiceName, node()]),
     {reply, ok, NewState};
 
 handle_call({unregister_service, ServiceName}, _From, State) ->
@@ -184,7 +184,7 @@ handle_call({unregister_service, ServiceName}, _From, State) ->
     % Broadcast service unregistration to cluster
     broadcast_to_cluster({service_unregistered, node(), ServiceName}, State),
     
-    lager:info("Unregistered service ~p from node ~p", [ServiceName, node()]),
+    io:format("Unregistered service ~p from node ~p~n", [ServiceName, node()]),
     {reply, ok, NewState};
 
 handle_call({discover_services, ServiceName}, _From, State) ->
@@ -222,7 +222,7 @@ handle_info(heartbeat, State) ->
     {noreply, NewState};
 
 handle_info({nodeup, Node}, State) ->
-    lager:info("Node ~p joined the cluster", [Node]),
+    io:format("Node ~p joined the cluster~n", [Node]),
     NewNodes = lists:usort([Node | State#state.cluster_nodes]),
     NewState = State#state{cluster_nodes = NewNodes},
     
@@ -242,7 +242,7 @@ handle_info({nodeup, Node}, State) ->
     {noreply, NewState};
 
 handle_info({nodedown, Node}, State) ->
-    lager:warning("Node ~p left the cluster", [Node]),
+    io:format("Node ~p left the cluster~n", [Node]),
     NewNodes = lists:delete(Node, State#state.cluster_nodes),
     
     % Check if the leader went down
@@ -297,14 +297,14 @@ do_join_cluster(TargetNode, State) ->
                         is_leader = (Leader =:= node())
                     },
                     
-                    lager:info("Successfully joined cluster with nodes: ~p", [AllNodes]),
+                    io:format("Successfully joined cluster with nodes: ~p~n", [AllNodes]),
                     {ok, NewState};
                 Error ->
-                    lager:error("Failed to get cluster info from ~p: ~p", [TargetNode, Error]),
+                    io:format("Failed to get cluster info from ~p: ~p~n", [TargetNode, Error]),
                     {error, cluster_info_failed}
             end;
         pang ->
-            lager:error("Failed to connect to target node ~p", [TargetNode]),
+            io:format("Failed to connect to target node ~p~n", [TargetNode]),
             {error, connection_failed}
     end.
 
@@ -332,7 +332,7 @@ do_leave_cluster(State) ->
         is_leader = true
     },
     
-    lager:info("Left cluster, now running as single node"),
+    io:format("Left cluster, now running as single node~n"),
     NewState.
 
 do_get_node_status(State) ->
@@ -427,11 +427,11 @@ do_elect_leader(State) ->
     
     case IsNewLeader of
         true ->
-            lager:info("Elected as cluster leader"),
+            io:format("Elected as cluster leader~n"),
             % Start leader-specific tasks
             start_leader_tasks();
         false ->
-            lager:info("Node ~p elected as cluster leader", [NewLeader]),
+            io:format("Node ~p elected as cluster leader~n", [NewLeader]),
             % Stop leader-specific tasks if we were leader before
             case State#state.is_leader of
                 true -> stop_leader_tasks();
@@ -512,7 +512,7 @@ handle_cluster_message(FromNode, Message, State) ->
     case Message of
         {heartbeat, _HeartbeatData} ->
             % Update node information
-            lager:debug("Received heartbeat from ~p", [FromNode]),
+            io:format("Received heartbeat from ~p~n", [FromNode]),
             State;
         
         {leader_elected, NewLeader} ->
@@ -529,12 +529,12 @@ handle_cluster_message(FromNode, Message, State) ->
         
         {node_joined, Node} ->
             NewNodes = lists:usort([Node | State#state.cluster_nodes]),
-            lager:info("Node ~p joined cluster", [Node]),
+            io:format("Node ~p joined cluster~n", [Node]),
             State#state{cluster_nodes = NewNodes};
         
         {node_leaving, Node} ->
             NewNodes = lists:delete(Node, State#state.cluster_nodes),
-            lager:info("Node ~p leaving cluster", [Node]),
+            io:format("Node ~p leaving cluster~n", [Node]),
             NewState = State#state{cluster_nodes = NewNodes},
             
             % If leader is leaving, trigger election
@@ -547,15 +547,15 @@ handle_cluster_message(FromNode, Message, State) ->
             do_elect_leader(State);
         
         {service_registered, Node, ServiceName, _ServiceData} ->
-            lager:info("Service ~p registered on node ~p", [ServiceName, Node]),
+            io:format("Service ~p registered on node ~p~n", [ServiceName, Node]),
             State;
         
         {service_unregistered, Node, ServiceName} ->
-            lager:info("Service ~p unregistered from node ~p", [ServiceName, Node]),
+            io:format("Service ~p unregistered from node ~p~n", [ServiceName, Node]),
             State;
         
         _ ->
-            lager:warning("Unknown cluster message from ~p: ~p", [FromNode, Message]),
+            io:format("Unknown cluster message from ~p: ~p~n", [FromNode, Message]),
             State
     end.
 
@@ -570,12 +570,12 @@ send_message_to_node(Node, Message) ->
 
 start_leader_tasks() ->
     % Start leader-specific background tasks
-    lager:info("Starting leader tasks"),
+    io:format("Starting leader tasks~n"),
     ok.
 
 stop_leader_tasks() ->
     % Stop leader-specific background tasks
-    lager:info("Stopping leader tasks"),
+    io:format("Stopping leader tasks~n"),
     ok.
 
 %% Utility functions

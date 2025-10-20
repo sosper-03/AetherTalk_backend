@@ -42,10 +42,10 @@ init(Args) ->
     
     case epgsql:connect(ConnectOptions) of
         {ok, Connection} ->
-            lager:info("Database worker connected successfully"),
+            io:format("Database worker connected successfully~n"),
             {ok, #state{connection = Connection}};
         {error, Reason} ->
-            lager:error("Failed to connect to database: ~p", [Reason]),
+            io:format("Failed to connect to database: ~p~n", [Reason]),
             {stop, Reason}
     end.
 
@@ -58,7 +58,7 @@ handle_call({query, SQL, Params, Timeout}, _From, #state{connection = Conn} = St
         {ok, Count, Columns, Rows} ->
             {ok, {Count, Columns, Rows}};
         {error, Error} ->
-            lager:error("Database query error: ~p", [Error]),
+            io:format("Database query error: ~p~n", [Error]),
             {error, Error}
     end,
     {reply, Result, State};

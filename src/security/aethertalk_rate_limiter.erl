@@ -107,7 +107,7 @@ cleanup_expired_entries() ->
 %% ===================================================================
 
 init([]) ->
-    lager:info("Rate Limiter started"),
+    io:format("Rate Limiter started~n"),
     
     % Create ETS table for rate limiting data
     RateLimits = ets:new(rate_limits, [set, private, {keypos, 1}]),
@@ -312,7 +312,7 @@ do_reset_rate_limit(UserId, Action, #state{rate_limits = RateLimits}) ->
     UserKey = {user, UserId, Action},
     ets:delete(RateLimits, UserKey),
     
-    lager:info("Reset rate limit for user ~p, action ~p", [UserId, Action]),
+    io:format("Reset rate limit for user ~p, action ~p~n", [UserId, Action]),
     {ok, reset}.
 
 do_set_custom_limit(UserId, Action, Limit, Window, _State) ->
@@ -325,7 +325,7 @@ do_set_custom_limit(UserId, Action, Limit, Window, _State) ->
     
     case aethertalk_db:query(SQL, [UserId, atom_to_binary(Action, utf8), Limit, Window]) of
         {ok, {_Columns, [{Id, CreatedAt}]}} ->
-            lager:info("Set custom rate limit for user ~p, action ~p: ~p/~ps", 
+            io:format("Set custom rate limit for user ~p, action ~p: ~p/~ps~n", 
                       [UserId, Action, Limit, Window]),
             {ok, #{
                 id => Id,
@@ -381,7 +381,7 @@ do_cleanup_expired_entries(#state{rate_limits = RateLimits}) ->
     lists:foreach(fun(Key) -> ets:delete(RateLimits, Key) end, AllKeys),
     
     if CleanedCount > 0 ->
-        lager:info("Cleaned up ~p expired rate limit entries", [CleanedCount]);
+        io:format("Cleaned up ~p expired rate limit entries~n", [CleanedCount]);
     true ->
         ok
     end.
@@ -389,7 +389,7 @@ do_cleanup_expired_entries(#state{rate_limits = RateLimits}) ->
 %% Helper functions
 
 log_rate_limit_violation(UserId, Action, ClientIP, LimitType) ->
-    lager:warning("Rate limit violation - User: ~p, Action: ~p, IP: ~p, Type: ~p", 
+    io:format("Rate limit violation - User: ~p, Action: ~p, IP: ~p, Type: ~p~n", 
                   [UserId, Action, ClientIP, LimitType]),
     
     % Store violation in database for analysis

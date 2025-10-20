@@ -74,7 +74,7 @@ cleanup_expired_live_locations() ->
 %% ===================================================================
 
 init([]) ->
-    lager:info("Location Service started"),
+    io:format("Location Service started~n"),
     
     % Set up cleanup timer (every 5 minutes)
     {ok, Timer} = timer:apply_interval(300000, ?MODULE, cleanup_expired_live_locations, []),
@@ -410,10 +410,10 @@ do_cleanup_expired_live_locations() ->
     
     case aethertalk_db:query(SQL, []) of
         {ok, Count} ->
-            lager:info("Deactivated ~p expired live locations", [Count]),
+            io:format("Deactivated ~p expired live locations~n", [Count]),
             {ok, Count};
         {error, Reason} ->
-            lager:error("Failed to cleanup expired live locations: ~p", [Reason]),
+            io:format("Failed to cleanup expired live locations: ~p~n", [Reason]),
             {error, Reason}
     end.
 
@@ -428,7 +428,7 @@ calculate_expiry_time(DurationMinutes) ->
 %% Notification functions
 
 notify_location_shared(ChatId, SenderId, LocationMessage) ->
-    lager:info("Location shared in chat ~p by user ~p", [ChatId, SenderId]),
+    io:format("Location shared in chat ~p by user ~p~n", [ChatId, SenderId]),
     spawn(fun() ->
         Notification = #{
             type => <<"location_shared">>,
@@ -441,7 +441,7 @@ notify_location_shared(ChatId, SenderId, LocationMessage) ->
     end).
 
 notify_live_location_started(ChatId, SenderId, LiveLocation) ->
-    lager:info("Live location started in chat ~p by user ~p", [ChatId, SenderId]),
+    io:format("Live location started in chat ~p by user ~p~n", [ChatId, SenderId]),
     spawn(fun() ->
         Notification = #{
             type => <<"live_location_started">>,
@@ -468,7 +468,7 @@ notify_live_location_updated(ChatId, UserId, LiveLocationId, Latitude, Longitude
     end).
 
 notify_live_location_stopped(ChatId, UserId, LiveLocationId) ->
-    lager:info("Live location stopped in chat ~p by user ~p", [ChatId, UserId]),
+    io:format("Live location stopped in chat ~p by user ~p~n", [ChatId, UserId]),
     spawn(fun() ->
         Notification = #{
             type => <<"live_location_stopped">>,

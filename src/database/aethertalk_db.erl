@@ -10,14 +10,15 @@
     query/2, query/3,
     transaction/1,
     get_connection/0,
-    return_connection/1
+    return_connection/1,
+    health_check/0
 ]).
 
 -include("aethertalk.hrl").
 
 %% @doc Initialize database schema
 init_schema() ->
-    lager:info("Initializing database schema"),
+    io:format("Initializing database schema~n"),
     
     % Create tables if they don't exist
     Tables = [
@@ -43,12 +44,12 @@ init_schema() ->
         case query(TableSQL, []) of
             {ok, _} -> ok;
             {error, Reason} ->
-                lager:error("Failed to create table: ~p", [Reason]),
+                io:format("Failed to create table: ~p~n", [Reason]),
                 error({table_creation_failed, Reason})
         end
     end, Tables),
     
-    lager:info("Database schema initialized successfully"),
+    io:format("Database schema initialized successfully~n"),
     ok.
 
 %% @doc Execute a query
@@ -317,3 +318,14 @@ create_encryption_keys_table() ->
         expires_at TIMESTAMP WITH TIME ZONE,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     )".
+
+%% @doc Health check for database connectivity
+health_check() ->
+    try
+        case query("SELECT 1", []) of
+            {ok, _} -> ok;
+            {error, _} -> error
+        end
+    catch
+        _:_ -> error
+    end.

@@ -95,7 +95,7 @@ delete_session(UserId1, UserId2) ->
 %% ===================================================================
 
 init([]) ->
-    lager:info("Encryption service started"),
+    io:format("Encryption service started~n"),
     
     % Set up key rotation timer
     {ok, Timer} = timer:apply_interval(?KEY_ROTATION_INTERVAL, ?MODULE, rotate_all_keys, []),
@@ -182,10 +182,10 @@ do_generate_identity_key(UserId) ->
                 created_at => CreatedAt
             },
             
-            lager:info("Generated identity key for user ~p", [UserId]),
+            io:format("Generated identity key for user ~p~n", [UserId]),
             {ok, IdentityKey};
         {error, Reason} ->
-            lager:error("Failed to generate identity key for user ~p: ~p", [UserId, Reason]),
+            io:format("Failed to generate identity key for user ~p: ~p~n", [UserId, Reason]),
             {error, Reason}
     end.
 
@@ -211,14 +211,14 @@ do_generate_prekeys(UserId, Count) ->
                     created_at => calendar:universal_time()
                 };
             {error, Reason} ->
-                lager:error("Failed to store prekey ~p for user ~p: ~p", [Index, UserId, Reason]),
+                io:format("Failed to store prekey ~p for user ~p: ~p~n", [Index, UserId, Reason]),
                 error
         end
     end, lists:seq(1, Count)),
     
     ValidPrekeys = [Key || Key <- Prekeys, Key =/= error],
     
-    lager:info("Generated ~p prekeys for user ~p", [length(ValidPrekeys), UserId]),
+    io:format("Generated ~p prekeys for user ~p~n", [length(ValidPrekeys), UserId]),
     {ok, ValidPrekeys}.
 
 do_create_session(UserId1, UserId2, InitiatorId) ->
@@ -270,7 +270,7 @@ create_new_session(UserId1, UserId2, InitiatorId) ->
                                 status => created
                             },
                             
-                            lager:info("Created encryption session between users ~p and ~p", [UserId1, UserId2]),
+                            io:format("Created encryption session between users ~p and ~p~n", [UserId1, UserId2]),
                             {ok, Session};
                         {error, Reason} ->
                             {error, Reason}
@@ -310,7 +310,7 @@ do_encrypt_message(SessionId, SenderId, PlainText) ->
                 }}
             catch
                 error:Reason ->
-                    lager:error("Encryption failed for session ~p: ~p", [SessionId, Reason]),
+                    io:format("Encryption failed for session ~p: ~p~n", [SessionId, Reason]),
                     {error, encryption_failed}
             end;
         {error, Reason} ->
@@ -341,12 +341,12 @@ do_decrypt_message(SessionId, ReceiverId, CipherText) ->
                             timestamp => erlang:system_time(millisecond)
                         }};
                     error ->
-                        lager:error("Decryption failed for session ~p", [SessionId]),
+                        io:format("Decryption failed for session ~p~n", [SessionId]),
                         {error, decryption_failed}
                 end
             catch
                 error:Reason ->
-                    lager:error("Decryption error for session ~p: ~p", [SessionId, Reason]),
+                    io:format("Decryption error for session ~p: ~p~n", [SessionId, Reason]),
                     {error, decryption_error}
             end;
         {error, Reason} ->
@@ -361,7 +361,7 @@ do_rotate_keys(UserId) ->
             SQL = "UPDATE user_identity_keys SET last_rotation = NOW() WHERE user_id = $1",
             aethertalk_db:query(SQL, [UserId]),
             
-            lager:info("Rotated keys for user ~p", [UserId]),
+            io:format("Rotated keys for user ~p~n", [UserId]),
             {ok, #{
                 user_id => UserId,
                 new_prekeys_count => length(NewPrekeys),
@@ -456,7 +456,7 @@ do_delete_session(UserId1, UserId2) ->
     
     case aethertalk_db:query(SQL, [UserId1, UserId2]) of
         {ok, 1} ->
-            lager:info("Deleted encryption session between users ~p and ~p", [UserId1, UserId2]),
+            io:format("Deleted encryption session between users ~p and ~p~n", [UserId1, UserId2]),
             ok;
         {ok, 0} ->
             {error, no_session};
@@ -504,7 +504,7 @@ perform_key_exchange(UserId1, UserId2, Key1, Key2, InitiatorId) ->
         end
     catch
         error:Reason ->
-            lager:error("Key exchange failed: ~p", [Reason]),
+            io:format("Key exchange failed: ~p~n", [Reason]),
             {error, key_exchange_error}
     end.
 
@@ -540,7 +540,7 @@ rotate_all_keys() ->
             lists:foreach(fun(UserId) ->
                 spawn(fun() -> do_rotate_keys(UserId) end)
             end, UserIds),
-            lager:info("Initiated key rotation for ~p users", [length(UserIds)]);
+            io:format("Initiated key rotation for ~p users~n", [length(UserIds)]);
         {error, Reason} ->
-            lager:error("Failed to get users for key rotation: ~p", [Reason])
+            io:format("Failed to get users for key rotation: ~p~n", [Reason])
     end.

@@ -24,9 +24,9 @@ init([]) ->
     
     % Get port configurations
     HttpPort = aethertalk_app:get_env(http_port, 8080),
-    HttpsPort = aethertalk_app:get_env(https_port, 8443),
+    _HttpsPort = aethertalk_app:get_env(https_port, 8443),
     _WebSocketPort = aethertalk_app:get_env(websocket_port, 8081),
-    MaxConnections = aethertalk_app:get_env(max_connections, 10000),
+    _MaxConnections = aethertalk_app:get_env(max_connections, 10000),
     
     % Define routes
     Dispatch = cowboy_router:compile([
@@ -63,6 +63,9 @@ init([]) ->
             % Health check
             {"/health", aethertalk_health_handler, []},
             
+            % Test endpoint
+            {"/test", aethertalk_test_handler, []},
+            
             % Static files
             {"/[...]", cowboy_static, {priv_dir, aethertalk, "static"}}
         ]}
@@ -74,26 +77,7 @@ init([]) ->
             id => aethertalk_http_listener,
             start => {cowboy, start_clear, [
                 aethertalk_http_listener,
-                [{port, HttpPort}, {max_connections, MaxConnections}],
-                #{env => #{dispatch => Dispatch}}
-            ]},
-            restart => permanent,
-            shutdown => 5000,
-            type => worker,
-            modules => [cowboy]
-        },
-        
-        % HTTPS server
-        #{
-            id => aethertalk_https_listener,
-            start => {cowboy, start_tls, [
-                aethertalk_https_listener,
-                [
-                    {port, HttpsPort},
-                    {max_connections, MaxConnections},
-                    {certfile, "./priv/ssl/cert.pem"},
-                    {keyfile, "./priv/ssl/key.pem"}
-                ],
+                #{socket_opts => [{port, HttpPort}], num_acceptors => 100},
                 #{env => #{dispatch => Dispatch}}
             ]},
             restart => permanent,

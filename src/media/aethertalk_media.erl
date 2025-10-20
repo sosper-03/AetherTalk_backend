@@ -26,9 +26,9 @@ init_storage() ->
     lists:foreach(fun(Dir) ->
         case filelib:ensure_dir(filename:join(Dir, "dummy")) of
             ok ->
-                lager:info("Created media directory: ~s", [Dir]);
+                io:format("Created media directory: ~s~n", [Dir]);
             {error, Reason} ->
-                lager:error("Failed to create media directory ~s: ~p", [Dir, Reason])
+                io:format("Failed to create media directory ~s: ~p~n", [Dir, Reason])
         end
     end, Directories),
     

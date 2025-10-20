@@ -29,7 +29,7 @@ generate_token(UserId, SessionId) ->
         {_JWS, Token} ->
             {ok, Token};
         Error ->
-            lager:error("Failed to generate token: ~p", [Error]),
+            io:format("Failed to generate token: ~p~n", [Error]),
             {error, token_generation_failed}
     end.
 

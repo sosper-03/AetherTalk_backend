@@ -158,7 +158,7 @@ generate_csrf_token(UserId) ->
         {ok, _} ->
             {ok, Token};
         {error, Reason} ->
-            lager:error("Failed to store CSRF token: ~p", [Reason]),
+            io:format("Failed to store CSRF token: ~p~n", [Reason]),
             {error, token_storage_failed}
     end.
 
@@ -232,7 +232,7 @@ log_security_event(Event, Req, ExtraData) ->
         timestamp => erlang:system_time(millisecond)
     }, ExtraData),
     
-    lager:warning("Security event: ~p", [EventData]),
+    io:format("Security event: ~p~n", [EventData]),
     
     % Store in database for analysis
     SQL = "INSERT INTO security_events (event_type, client_ip, user_agent, path, method, 

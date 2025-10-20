@@ -67,7 +67,7 @@ get_user_reaction_stats(UserId) ->
 %% ===================================================================
 
 init([]) ->
-    lager:info("Reactions Manager started"),
+    io:format("Reactions Manager started~n"),
     {ok, #state{}}.
 
 handle_call({add_reaction, MessageId, UserId, Reaction}, _From, State) ->
@@ -319,7 +319,7 @@ check_message_exists(MessageId) ->
 %% Notification functions
 
 notify_reaction_added(MessageId, UserId, Reaction) ->
-    lager:info("Reaction ~p added to message ~p by user ~p", [Reaction, MessageId, UserId]),
+    io:format("Reaction ~p added to message ~p by user ~p~n", [Reaction, MessageId, UserId]),
     % Get message details for notification
     spawn(fun() ->
         case get_message_details(MessageId) of
@@ -357,7 +357,7 @@ notify_reaction_added(MessageId, UserId, Reaction) ->
     end).
 
 notify_reaction_removed(MessageId, UserId, Reaction) ->
-    lager:info("Reaction ~p removed from message ~p by user ~p", [Reaction, MessageId, UserId]),
+    io:format("Reaction ~p removed from message ~p by user ~p~n", [Reaction, MessageId, UserId]),
     % Get message details for notification
     spawn(fun() ->
         case get_message_details(MessageId) of

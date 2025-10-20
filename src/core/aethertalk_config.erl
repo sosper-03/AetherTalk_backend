@@ -18,7 +18,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    lager:info("Configuration manager started"),
+    io:format("Configuration manager started~n"),
     {ok, #state{}}.
 
 handle_call(_Request, _From, State) ->

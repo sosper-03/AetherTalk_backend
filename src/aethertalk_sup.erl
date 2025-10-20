@@ -183,14 +183,7 @@ init([]) ->
             modules => [aethertalk_encryption]
         },
         
-        #{
-            id => aethertalk_rate_limiter,
-            start => {aethertalk_rate_limiter, start_link, []},
-            restart => permanent,
-            shutdown => 5000,
-            type => worker,
-            modules => [aethertalk_rate_limiter]
-        },
+
         
         #{
             id => aethertalk_mfa,

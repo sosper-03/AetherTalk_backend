@@ -18,7 +18,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    lager:info("Database migration manager started"),
+    io:format("Database migration manager started~n"),
     {ok, #state{}}.
 
 handle_call(_Request, _From, State) ->

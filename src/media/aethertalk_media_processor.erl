@@ -28,7 +28,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    lager:info("Media processor started"),
+    io:format("Media processor started~n"),
     {ok, #state{}}.
 
 handle_call({process_image, FilePath, Options}, _From, State) ->
@@ -115,7 +115,7 @@ do_process_image(FilePath, Options) ->
         }}
     catch
         _:Error ->
-            lager:error("Image processing failed: ~p", [Error]),
+            io:format("Image processing failed: ~p~n", [Error]),
             {error, processing_failed}
     end.
 
@@ -143,7 +143,7 @@ do_process_video(FilePath, Options) ->
         }}
     catch
         _:Error ->
-            lager:error("Video processing failed: ~p", [Error]),
+            io:format("Video processing failed: ~p~n", [Error]),
             {error, processing_failed}
     end.
 
@@ -170,7 +170,7 @@ do_process_audio(FilePath, Options) ->
         }}
     catch
         _:Error ->
-            lager:error("Audio processing failed: ~p", [Error]),
+            io:format("Audio processing failed: ~p~n", [Error]),
             {error, processing_failed}
     end.
 
@@ -194,7 +194,7 @@ do_generate_thumbnail(FilePath, Options) ->
         }}
     catch
         _:Error ->
-            lager:error("Thumbnail generation failed: ~p", [Error]),
+            io:format("Thumbnail generation failed: ~p~n", [Error]),
             {error, thumbnail_failed}
     end.
 
@@ -221,7 +221,7 @@ do_get_media_info(FilePath) ->
         end
     catch
         _:Error ->
-            lager:error("Failed to get media info: ~p", [Error]),
+            io:format("Failed to get media info: ~p~n", [Error]),
             {error, info_failed}
     end.
 

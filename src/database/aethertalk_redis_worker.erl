@@ -10,7 +10,7 @@
 
 -export([start_link/1]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
--export([command/2, pipeline/2]).
+-export([command/2, pipeline/2, health_check/0]).
 
 -include("aethertalk.hrl").
 
@@ -39,10 +39,10 @@ init(Args) ->
     
     case eredis:start_link(ConnectOptions) of
         {ok, Connection} ->
-            lager:info("Redis worker connected successfully"),
+            io:format("Redis worker connected successfully~n"),
             {ok, #state{connection = Connection}};
         {error, Reason} ->
-            lager:error("Failed to connect to Redis: ~p", [Reason]),
+            io:format("Failed to connect to Redis: ~p~n", [Reason]),
             {stop, Reason}
     end.
 
@@ -83,3 +83,16 @@ command(Worker, Command) ->
 
 pipeline(Worker, Commands) ->
     gen_server:call(Worker, {pipeline, Commands}).
+
+%% @doc Health check for Redis connectivity
+health_check() ->
+    try
+        case poolboy:transaction(redis_pool, fun(Worker) ->
+            command(Worker, ["PING"])
+        end) of
+            {ok, <<"PONG">>} -> ok;
+            _ -> error
+        end
+    catch
+        _:_ -> error
+    end.

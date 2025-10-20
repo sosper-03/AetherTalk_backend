@@ -40,7 +40,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    lager:info("Message router started"),
+    io:format("Message router started~n"),
     {ok, #state{}}.
 
 handle_call({send_message, MessageData}, _From, State) ->
@@ -240,10 +240,10 @@ do_send_message(MessageData) ->
                             % Handle translation if needed
                             handle_message_translation(Message),
                             
-                            lager:info("Message sent successfully: ~p", [MessageId]),
+                            io:format("Message sent successfully: ~p~n", [MessageId]),
                             {ok, Message};
                         {error, Reason} ->
-                            lager:error("Failed to send message: ~p", [Reason]),
+                            io:format("Failed to send message: ~p~n", [Reason]),
                             {error, message_send_failed}
                     end;
                 {error, Reason} ->

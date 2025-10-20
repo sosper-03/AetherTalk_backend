@@ -27,7 +27,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    lager:info("Notification service started"),
+    io:format("Notification service started~n"),
     {ok, #state{}}.
 
 handle_call({send_push_notification, UserId, NotificationData}, _From, State) ->
@@ -94,7 +94,7 @@ do_send_push_notification(UserId, NotificationData) ->
     case do_create_notification(UserId, NotificationData) of
         {ok, Notification} ->
             % Simulate push notification sending
-            lager:info("Sending push notification to user ~p: ~p", [UserId, Title]),
+            io:format("Sending push notification to user ~p: ~p~n", [UserId, Title]),
             {ok, Notification};
         {error, Reason} ->
             {error, Reason}
@@ -102,7 +102,7 @@ do_send_push_notification(UserId, NotificationData) ->
 
 do_send_email_notification(UserId, Subject, _Body) ->
     % This is a stub - in production you'd use SMTP or email service
-    lager:info("Sending email notification to user ~p: ~p", [UserId, Subject]),
+    io:format("Sending email notification to user ~p: ~p~n", [UserId, Subject]),
     {ok, #{sent_at => erlang:system_time(second)}}.
 
 do_create_notification(UserId, NotificationData) ->

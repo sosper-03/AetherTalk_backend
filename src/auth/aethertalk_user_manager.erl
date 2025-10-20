@@ -39,7 +39,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    lager:info("User manager started"),
+    io:format("User manager started~n"),
     {ok, #state{}}.
 
 handle_call({register_user, UserData}, _From, State) ->
@@ -219,7 +219,7 @@ do_register_user(UserData) ->
                     
                     case aethertalk_db:query(SQL, Params) of
                         {ok, {_Columns, [{UserId, CreatedAt}]}} ->
-                            lager:info("User registered successfully: ~p", [UserId]),
+                            io:format("User registered successfully: ~p~n", [UserId]),
                             {ok, #{
                                 id => UserId,
                                 phone_number => PhoneNumber,
@@ -231,7 +231,7 @@ do_register_user(UserData) ->
                                 created_at => CreatedAt
                             }};
                         {error, Reason} ->
-                            lager:error("Failed to register user: ~p", [Reason]),
+                            io:format("Failed to register user: ~p~n", [Reason]),
                             {error, registration_failed}
                     end;
                 {ok, _ExistingUser} ->

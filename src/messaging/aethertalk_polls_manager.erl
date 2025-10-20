@@ -72,7 +72,7 @@ delete_poll(PollId, UserId) ->
 %% ===================================================================
 
 init([]) ->
-    lager:info("Polls Manager started"),
+    io:format("Polls Manager started~n"),
     {ok, #state{}}.
 
 handle_call({create_poll, ChatId, CreatorId, Question, Options, ExpiresAt}, _From, State) ->
@@ -480,7 +480,7 @@ check_poll_votable(PollId) ->
 %% Notification functions
 
 notify_poll_created(ChatId, PollId) ->
-    lager:info("Poll created in chat ~p: ~p", [ChatId, PollId]),
+    io:format("Poll created in chat ~p: ~p~n", [ChatId, PollId]),
     spawn(fun() ->
         Notification = #{
             type => <<"poll_created">>,
@@ -492,7 +492,7 @@ notify_poll_created(ChatId, PollId) ->
     end).
 
 notify_poll_voted(PollId, UserId, OptionId) ->
-    lager:info("User ~p voted on poll ~p, option ~p", [UserId, PollId, OptionId]),
+    io:format("User ~p voted on poll ~p, option ~p~n", [UserId, PollId, OptionId]),
     spawn(fun() ->
         case get_poll_chat_id(PollId) of
             {ok, ChatId} ->
@@ -510,14 +510,14 @@ notify_poll_voted(PollId, UserId, OptionId) ->
     end).
 
 notify_poll_vote_changed(PollId, UserId, OldOptionId, NewOptionId) ->
-    lager:info("User ~p changed vote on poll ~p from ~p to ~p", 
+    io:format("User ~p changed vote on poll ~p from ~p to ~p~n", 
                [UserId, PollId, OldOptionId, NewOptionId]).
 
 notify_poll_closed(PollId) ->
-    lager:info("Poll closed: ~p", [PollId]).
+    io:format("Poll closed: ~p~n", [PollId]).
 
 notify_poll_deleted(PollId) ->
-    lager:info("Poll deleted: ~p", [PollId]).
+    io:format("Poll deleted: ~p~n", [PollId]).
 
 get_poll_chat_id(PollId) ->
     SQL = "SELECT chat_id FROM polls WHERE id = $1",

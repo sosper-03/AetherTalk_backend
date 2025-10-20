@@ -82,7 +82,7 @@ get_disappearing_settings(ChatId) ->
 %% ===================================================================
 
 init([]) ->
-    lager:info("Disappearing Messages service started"),
+    io:format("Disappearing Messages service started~n"),
     
     % Set up cleanup timer (every 5 minutes)
     {ok, Timer} = timer:apply_interval(300000, ?MODULE, cleanup_expired_messages, []),
@@ -297,10 +297,10 @@ do_cleanup_expired_messages() ->
                 delete_expired_message(MessageId, ChatId)
             end, ExpiredMessages),
             
-            lager:info("Cleaned up ~p expired disappearing messages", [length(ExpiredMessages)]),
+            io:format("Cleaned up ~p expired disappearing messages~n", [length(ExpiredMessages)]),
             {ok, length(ExpiredMessages)};
         {error, Reason} ->
-            lager:error("Failed to cleanup expired messages: ~p", [Reason]),
+            io:format("Failed to cleanup expired messages: ~p~n", [Reason]),
             {error, Reason}
     end.
 
@@ -351,17 +351,17 @@ delete_expired_message(MessageId, ChatId) ->
             notify_message_disappeared(ChatId, MessageId),
             ok;
         {ok, 0} ->
-            lager:warning("Message ~p already deleted", [MessageId]),
+            io:format("Message ~p already deleted~n", [MessageId]),
             ok;
         {error, Reason} ->
-            lager:error("Failed to delete expired message ~p: ~p", [MessageId, Reason]),
+            io:format("Failed to delete expired message ~p: ~p~n", [MessageId, Reason]),
             {error, Reason}
     end.
 
 %% Notification functions
 
 notify_disappearing_timer_changed(ChatId, UserId, TimerSeconds) ->
-    lager:info("Disappearing timer changed in chat ~p by user ~p to ~p seconds", 
+    io:format("Disappearing timer changed in chat ~p by user ~p to ~p seconds~n", 
                [ChatId, UserId, TimerSeconds]),
     
     spawn(fun() ->
@@ -377,7 +377,7 @@ notify_disappearing_timer_changed(ChatId, UserId, TimerSeconds) ->
     end).
 
 notify_message_disappeared(ChatId, MessageId) ->
-    lager:info("Message ~p disappeared from chat ~p", [MessageId, ChatId]),
+    io:format("Message ~p disappeared from chat ~p~n", [MessageId, ChatId]),
     
     spawn(fun() ->
         Notification = #{

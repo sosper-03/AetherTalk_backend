@@ -29,7 +29,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    lager:info("Call manager started"),
+    io:format("Call manager started~n"),
     {ok, #state{}}.
 
 handle_call({initiate_call, InitiatorId, ChatId, CallType}, _From, State) ->
@@ -156,7 +156,7 @@ do_end_call(CallId, _UserId) ->
 
 do_handle_signal(CallId, UserId, SignalType, _Signal) ->
     % Handle WebRTC signaling (stub)
-    lager:info("Handling signal ~p from user ~p for call ~p", [SignalType, UserId, CallId]),
+    io:format("Handling signal ~p from user ~p for call ~p~n", [SignalType, UserId, CallId]),
     ok.
 
 do_get_call_info(CallId) ->

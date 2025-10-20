@@ -22,7 +22,6 @@
         inets,
         asn1,
         runtime_tools,
-        observer,
         mnesia,
         cowboy,
         jsx,
@@ -47,6 +46,22 @@
         {https_port, 8443},
         {websocket_port, 8081},
         {max_connections, 10000},
+        {database, [
+            {host, "localhost"},
+            {port, 5432},
+            {database, "aethertalk"},
+            {username, "aethertalk"},
+            {password, "aethertalk_pass"},
+            {pool_size, 20},
+            {max_overflow, 5}
+        ]},
+        {redis, [
+            {hostname, "localhost"},
+            {port, 6379},
+            {database, 0},
+            {pool_size, 10},
+            {max_overflow, 5}
+        ]},
         {database_pool_size, 20},
         {redis_pool_size, 10},
         {media_storage_path, "./media"},

@@ -112,7 +112,7 @@ send_broadcast(BroadcastId, SenderId, Message) ->
 %% ===================================================================
 
 init([]) ->
-    lager:info("Group Manager started"),
+    io:format("Group Manager started~n"),
     {ok, #state{}}.
 
 handle_call({create_group, CreatorId, GroupName, Description}, _From, State) ->
@@ -669,28 +669,28 @@ send_broadcast_messages(SenderId, MemberIds, Message) ->
 %% Notification functions
 
 notify_group_created(Group) ->
-    lager:info("Group created: ~p", [maps:get(id, Group)]).
+    io:format("Group created: ~p~n", [maps:get(id, Group)]).
 
 notify_group_updated(GroupId, _Updates) ->
-    lager:info("Group updated: ~p", [GroupId]).
+    io:format("Group updated: ~p~n", [GroupId]).
 
 notify_group_deleted(GroupId) ->
-    lager:info("Group deleted: ~p", [GroupId]).
+    io:format("Group deleted: ~p~n", [GroupId]).
 
 notify_member_added(GroupId, UserId) ->
-    lager:info("Member ~p added to group ~p", [UserId, GroupId]).
+    io:format("Member ~p added to group ~p~n", [UserId, GroupId]).
 
 notify_member_removed(GroupId, UserId) ->
-    lager:info("Member ~p removed from group ~p", [UserId, GroupId]).
+    io:format("Member ~p removed from group ~p~n", [UserId, GroupId]).
 
 notify_member_promoted(GroupId, UserId) ->
-    lager:info("Member ~p promoted to admin in group ~p", [UserId, GroupId]).
+    io:format("Member ~p promoted to admin in group ~p~n", [UserId, GroupId]).
 
 notify_member_demoted(GroupId, UserId) ->
-    lager:info("Admin ~p demoted to member in group ~p", [UserId, GroupId]).
+    io:format("Admin ~p demoted to member in group ~p~n", [UserId, GroupId]).
 
 notify_member_left(GroupId, UserId) ->
-    lager:info("Member ~p left group ~p", [UserId, GroupId]).
+    io:format("Member ~p left group ~p~n", [UserId, GroupId]).
 
 notify_group_settings_updated(GroupId, _Settings) ->
-    lager:info("Group settings updated for group ~p", [GroupId]).
+    io:format("Group settings updated for group ~p~n", [GroupId]).

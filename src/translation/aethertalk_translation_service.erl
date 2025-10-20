@@ -126,7 +126,7 @@ init([]) ->
     % Start cache cleanup timer
     timer:send_interval(300000, cleanup_cache), % Every 5 minutes
     
-    lager:info("Translation service started with providers: ~p", [Providers]),
+    io:format("Translation service started with providers: ~p~n", [Providers]),
     {ok, #state{
         translation_cache = TranslationCache,
         api_keys = ApiKeys,
@@ -234,7 +234,7 @@ do_translate_text(Text, SourceLang, TargetLang, State) ->
             % Check cache first
             case do_get_cached_translation(Text, SourceLang, TargetLang, State) of
                 {ok, CachedResult} ->
-                    lager:debug("Cache hit for translation: ~s -> ~s", [SourceLang, TargetLang]),
+                    io:format("Cache hit for translation: ~s -> ~s~n", [SourceLang, TargetLang]),
                     {ok, CachedResult};
                 {error, not_found} ->
                     % Perform actual translation
@@ -257,11 +257,11 @@ do_translate_message(MessageId, Text, SourceLang, TargetLang, State) ->
             % Store translation in database
             case store_message_translation(MessageId, Translation, SourceLang, TargetLang) of
                 ok ->
-                    lager:info("Stored translation for message ~s: ~s -> ~s", 
+                    io:format("Stored translation for message ~s: ~s -> ~s~n", 
                               [MessageId, SourceLang, TargetLang]),
                     {ok, Translation};
                 {error, Reason} ->
-                    lager:error("Failed to store message translation: ~p", [Reason]),
+                    io:format("Failed to store message translation: ~p~n", [Reason]),
                     % Still return the translation even if storage failed
                     {ok, Translation}
             end;
@@ -290,11 +290,11 @@ do_enable_auto_translate(UserId, ChatId, TargetLang) ->
     
     case aethertalk_db:query(SQL, [UserId, ChatId, TargetLang]) of
         {ok, _} ->
-            lager:info("Enabled auto-translate for user ~s in chat ~s to ~s", 
+            io:format("Enabled auto-translate for user ~s in chat ~s to ~s~n", 
                       [UserId, ChatId, TargetLang]),
             ok;
         {error, Reason} ->
-            lager:error("Failed to enable auto-translate: ~p", [Reason]),
+            io:format("Failed to enable auto-translate: ~p~n", [Reason]),
             {error, database_error}
     end.
 
@@ -305,10 +305,10 @@ do_disable_auto_translate(UserId, ChatId) ->
     
     case aethertalk_db:query(SQL, [UserId, ChatId]) of
         {ok, _} ->
-            lager:info("Disabled auto-translate for user ~s in chat ~s", [UserId, ChatId]),
+            io:format("Disabled auto-translate for user ~s in chat ~s~n", [UserId, ChatId]),
             ok;
         {error, Reason} ->
-            lager:error("Failed to disable auto-translate: ~p", [Reason]),
+            io:format("Failed to disable auto-translate: ~p~n", [Reason]),
             {error, database_error}
     end.
 
@@ -329,7 +329,7 @@ do_get_translation_settings(UserId, ChatId) ->
         {ok, {_Columns, []}} ->
             {error, not_found};
         {error, Reason} ->
-            lager:error("Failed to get translation settings: ~p", [Reason]),
+            io:format("Failed to get translation settings: ~p~n", [Reason]),
             {error, database_error}
     end.
 
@@ -388,7 +388,7 @@ do_get_translation_stats(UserId) ->
             },
             {ok, Stats};
         {error, Reason} ->
-            lager:error("Failed to get translation stats: ~p", [Reason]),
+            io:format("Failed to get translation stats: ~p~n", [Reason]),
             {error, database_error}
     end.
 
@@ -444,7 +444,7 @@ do_cache_translation(Text, SourceLang, TargetLang, Translation, State) ->
     },
     
     ets:insert(State#state.translation_cache, {CacheKey, TranslationResult, Now}),
-    lager:debug("Cached translation: ~s -> ~s", [SourceLang, TargetLang]).
+    io:format("Cached translation: ~s -> ~s~n", [SourceLang, TargetLang]).
 
 do_cleanup_cache(State) ->
     Now = erlang:system_time(second),
@@ -466,7 +466,7 @@ do_cleanup_cache(State) ->
     
     if
         ExpiredCount > 0 ->
-            lager:debug("Cleaned up ~p expired translation cache entries", [ExpiredCount]);
+            io:format("Cleaned up ~p expired translation cache entries~n", [ExpiredCount]);
         true ->
             ok
     end.
@@ -525,12 +525,12 @@ detect_language_simple(Text) ->
 
 speech_to_text(AudioData, Language, Format) ->
     % This would integrate with speech recognition services
-    lager:info("Converting speech to text: ~p bytes, ~s, ~s", [byte_size(AudioData), Language, Format]),
+    io:format("Converting speech to text: ~p bytes, ~s, ~s~n", [byte_size(AudioData), Language, Format]),
     {ok, <<"Hello, this is a placeholder text from speech recognition.">>}.
 
 text_to_speech(Text, Language) ->
     % This would integrate with text-to-speech services
-    lager:info("Converting text to speech: ~s, ~s", [Text, Language]),
+    io:format("Converting text to speech: ~s, ~s~n", [Text, Language]),
     {ok, <<"placeholder_audio_data">>}.
 
 %% Validation functions

@@ -135,7 +135,7 @@ init([]) ->
     % Start call cleanup timer
     timer:send_interval(60000, cleanup_ended_calls), % Every minute
     
-    lager:info("WebRTC manager started with ~p ICE servers", [length(IceServers)]),
+    io:format("WebRTC manager started with ~p ICE servers~n", [length(IceServers)]),
     {ok, #state{
         active_calls = #{},
         ice_servers = IceServers
@@ -271,10 +271,10 @@ do_initiate_call(CallerId, CalleeId, Type, Options, State) ->
                 group_video -> notify_group_call(maps:get(participants, Options, []), CallId, group_video, CallerId)
             end,
             
-            lager:info("Initiated ~p call ~s from ~s", [Type, CallId, CallerId]),
+            io:format("Initiated ~p call ~s from ~s~n", [Type, CallId, CallerId]),
             {ok, CallId, NewState};
         {error, Reason} ->
-            lager:error("Failed to store call in database: ~p", [Reason]),
+            io:format("Failed to store call in database: ~p~n", [Reason]),
             {error, database_error}
     end.
 
@@ -311,7 +311,7 @@ do_answer_call(CallId, UserId, State) ->
             % Notify all participants that call was answered
             broadcast_to_call_participants(CallId, UserId, {call_answered, UserId}, State),
             
-            lager:info("User ~s answered call ~s", [UserId, CallId]),
+            io:format("User ~s answered call ~s~n", [UserId, CallId]),
             {ok, NewState}
     end.
 
@@ -336,7 +336,7 @@ do_decline_call(CallId, UserId, State) ->
             % Notify caller that call was declined
             notify_call_declined(CallInfo#call_info.caller_id, CallId, UserId),
             
-            lager:info("User ~s declined call ~s", [UserId, CallId]),
+            io:format("User ~s declined call ~s~n", [UserId, CallId]),
             {ok, NewState}
     end.
 
@@ -365,7 +365,7 @@ do_end_call(CallId, UserId, State) ->
             
             % Calculate call duration and log
             Duration = Now - CallInfo#call_info.started_at,
-            lager:info("Call ~s ended by ~s, duration: ~p ms", [CallId, UserId, Duration]),
+            io:format("Call ~s ended by ~s, duration: ~p ms~n", [CallId, UserId, Duration]),
             
             {ok, NewState}
     end.
@@ -401,7 +401,7 @@ do_cleanup_ended_calls(State) ->
     RemovedCount = maps:size(State#state.active_calls) - maps:size(NewActiveCalls),
     if
         RemovedCount > 0 ->
-            lager:debug("Cleaned up ~p ended calls", [RemovedCount]);
+            io:format("Cleaned up ~p ended calls~n", [RemovedCount]);
         true -> ok
     end,
     
@@ -419,7 +419,7 @@ broadcast_to_call_participants(CallId, ExcludeUserId, Message, State) ->
             
             lists:foreach(fun(UserId) ->
                 % Would send via WebSocket - simplified for now
-                lager:debug("Sending message to user ~s: ~p", [UserId, Message])
+                io:format("Sending message to user ~s: ~p~n", [UserId, Message])
             end, Participants)
     end.
 
@@ -501,7 +501,7 @@ notify_incoming_call(CalleeId, CallId, Type, CallerId) ->
         caller_id => CallerId,
         timestamp => erlang:system_time(millisecond)
     },
-    lager:info("Notifying user ~s of incoming ~p call from ~s", [CalleeId, Type, CallerId]).
+    io:format("Notifying user ~s of incoming ~p call from ~s~n", [CalleeId, Type, CallerId]).
 
 notify_group_call(Participants, CallId, Type, CallerId) ->
     _Message = #{
@@ -512,7 +512,7 @@ notify_group_call(Participants, CallId, Type, CallerId) ->
         timestamp => erlang:system_time(millisecond)
     },
     lists:foreach(fun(UserId) ->
-        lager:info("Notifying user ~s of group ~p call from ~s", [UserId, Type, CallerId])
+        io:format("Notifying user ~s of group ~p call from ~s~n", [UserId, Type, CallerId])
     end, Participants).
 
 notify_call_declined(CallerId, CallId, DeclinedBy) ->
@@ -522,7 +522,7 @@ notify_call_declined(CallerId, CallId, DeclinedBy) ->
         declined_by => DeclinedBy,
         timestamp => erlang:system_time(millisecond)
     },
-    lager:info("Notifying user ~s that call was declined by ~s", [CallerId, DeclinedBy]).
+    io:format("Notifying user ~s that call was declined by ~s~n", [CallerId, DeclinedBy]).
 
 %% Database operations (simplified - would use actual database module)
 store_call_in_db(CallInfo) ->

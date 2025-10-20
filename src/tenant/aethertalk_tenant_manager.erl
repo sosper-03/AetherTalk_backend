@@ -111,7 +111,7 @@ set_tenant_context(TenantId) ->
     case aethertalk_db:query("SET app.current_tenant_id = $1", [TenantId]) of
         {ok, _} -> ok;
         {error, Reason} -> 
-            lager:error("Failed to set tenant context: ~p", [Reason]),
+            io:format("Failed to set tenant context: ~p~n", [Reason]),
             {error, Reason}
     end.
 
@@ -147,7 +147,7 @@ init([]) ->
     % Start cache cleanup timer
     timer:send_interval(60000, cleanup_cache), % Every minute
     
-    lager:info("Tenant manager started"),
+    io:format("Tenant manager started~n"),
     {ok, #state{
         tenant_cache = TenantCache,
         cache_ttl = ?CACHE_TTL
@@ -243,7 +243,7 @@ do_create_tenant(Name, Slug, Domain, Plan, MaxUsers, MaxStorageGB) ->
     
     case aethertalk_db:query(SQL, [Name, Slug, Domain, Plan, MaxUsers, MaxStorageGB]) of
         {ok, {_Columns, [{TenantId, CreatedAt}]}} ->
-            lager:info("Created tenant ~s (~s) with ID ~s", [Name, Slug, TenantId]),
+            io:format("Created tenant ~s (~s) with ID ~s~n", [Name, Slug, TenantId]),
             Tenant = #{
                 id => TenantId,
                 name => Name,
@@ -259,7 +259,7 @@ do_create_tenant(Name, Slug, Domain, Plan, MaxUsers, MaxStorageGB) ->
         {error, {error, error, <<"23505">>, unique_violation, _}} ->
             {error, slug_already_exists};
         {error, Reason} ->
-            lager:error("Failed to create tenant: ~p", [Reason]),
+            io:format("Failed to create tenant: ~p~n", [Reason]),
             {error, Reason}
     end.
 
@@ -307,7 +307,7 @@ fetch_and_cache_tenant(TenantId, State) ->
         {ok, {_Columns, []}} ->
             {error, not_found};
         {error, Reason} ->
-            lager:error("Failed to fetch tenant ~s: ~p", [TenantId, Reason]),
+            io:format("Failed to fetch tenant ~s: ~p~n", [TenantId, Reason]),
             {error, Reason}
     end.
 
@@ -339,7 +339,7 @@ do_get_tenant_by_slug(Slug, State) ->
         {ok, {_Columns, []}} ->
             {error, not_found};
         {error, Reason} ->
-            lager:error("Failed to fetch tenant by slug ~s: ~p", [Slug, Reason]),
+            io:format("Failed to fetch tenant by slug ~s: ~p~n", [Slug, Reason]),
             {error, Reason}
     end.
 
@@ -371,7 +371,7 @@ do_get_tenant_by_domain(Domain, State) ->
         {ok, {_Columns, []}} ->
             {error, not_found};
         {error, Reason} ->
-            lager:error("Failed to fetch tenant by domain ~s: ~p", [Domain, Reason]),
+            io:format("Failed to fetch tenant by domain ~s: ~p~n", [Domain, Reason]),
             {error, Reason}
     end.
 
@@ -391,12 +391,12 @@ do_update_tenant(TenantId, Updates, State) ->
                 {ok, {_Columns, [{UpdatedAt}]}} ->
                     % Invalidate cache
                     ets:delete(State#state.tenant_cache, TenantId),
-                    lager:info("Updated tenant ~s", [TenantId]),
+                    io:format("Updated tenant ~s~n", [TenantId]),
                     {ok, #{updated_at => UpdatedAt}};
                 {ok, {_Columns, []}} ->
                     {error, not_found};
                 {error, Reason} ->
-                    lager:error("Failed to update tenant ~s: ~p", [TenantId, Reason]),
+                    io:format("Failed to update tenant ~s: ~p~n", [TenantId, Reason]),
                     {error, Reason}
             end
     end.
@@ -415,10 +415,10 @@ do_delete_tenant(TenantId, State) ->
         {ok, {_Columns, _}} ->
             % Invalidate cache
             ets:delete(State#state.tenant_cache, TenantId),
-            lager:info("Deleted tenant ~s", [TenantId]),
+            io:format("Deleted tenant ~s~n", [TenantId]),
             ok;
         {error, Reason} ->
-            lager:error("Failed to delete tenant ~s: ~p", [TenantId, Reason]),
+            io:format("Failed to delete tenant ~s: ~p~n", [TenantId, Reason]),
             {error, Reason}
     end.
 
@@ -442,7 +442,7 @@ do_list_tenants() ->
             } || {Id, Name, Slug, Domain, Plan, MaxUsers, MaxStorageGB, IsActive, CreatedAt} <- Rows],
             {ok, Tenants};
         {error, Reason} ->
-            lager:error("Failed to list tenants: ~p", [Reason]),
+            io:format("Failed to list tenants: ~p~n", [Reason]),
             {error, Reason}
     end.
 
@@ -467,7 +467,7 @@ do_list_tenants(Limit, Offset) ->
             } || {Id, Name, Slug, Domain, Plan, MaxUsers, MaxStorageGB, IsActive, CreatedAt} <- Rows],
             {ok, Tenants};
         {error, Reason} ->
-            lager:error("Failed to list tenants: ~p", [Reason]),
+            io:format("Failed to list tenants: ~p~n", [Reason]),
             {error, Reason}
     end.
 
@@ -483,14 +483,14 @@ do_add_user_to_tenant(TenantId, UserId, Role) ->
             UpdateSQL = "UPDATE users SET tenant_id = $1 WHERE id = $2",
             case aethertalk_db:query(UpdateSQL, [TenantId, UserId]) of
                 {ok, _} ->
-                    lager:info("Added user ~s to tenant ~s with role ~s", [UserId, TenantId, Role]),
+                    io:format("Added user ~s to tenant ~s with role ~s~n", [UserId, TenantId, Role]),
                     ok;
                 {error, Reason} ->
-                    lager:error("Failed to update user tenant: ~p", [Reason]),
+                    io:format("Failed to update user tenant: ~p~n", [Reason]),
                     {error, Reason}
             end;
         {error, Reason} ->
-            lager:error("Failed to add user ~s to tenant ~s: ~p", [UserId, TenantId, Reason]),
+            io:format("Failed to add user ~s to tenant ~s: ~p~n", [UserId, TenantId, Reason]),
             {error, Reason}
     end.
 
@@ -499,10 +499,10 @@ do_remove_user_from_tenant(TenantId, UserId) ->
     
     case aethertalk_db:query(SQL, [TenantId, UserId]) of
         {ok, _} ->
-            lager:info("Removed user ~s from tenant ~s", [UserId, TenantId]),
+            io:format("Removed user ~s from tenant ~s~n", [UserId, TenantId]),
             ok;
         {error, Reason} ->
-            lager:error("Failed to remove user ~s from tenant ~s: ~p", [UserId, TenantId, Reason]),
+            io:format("Failed to remove user ~s from tenant ~s: ~p~n", [UserId, TenantId, Reason]),
             {error, Reason}
     end.
 
@@ -525,7 +525,7 @@ do_get_tenant_users(TenantId) ->
             } || {UserId, Role, JoinedAt, Username, Email, FullName} <- Rows],
             {ok, Users};
         {error, Reason} ->
-            lager:error("Failed to get tenant users for ~s: ~p", [TenantId, Reason]),
+            io:format("Failed to get tenant users for ~s: ~p~n", [TenantId, Reason]),
             {error, Reason}
     end.
 
@@ -548,7 +548,7 @@ do_get_user_tenants(UserId) ->
             } || {TenantId, Role, JoinedAt, Name, Slug, Domain} <- Rows],
             {ok, Tenants};
         {error, Reason} ->
-            lager:error("Failed to get user tenants for ~s: ~p", [UserId, Reason]),
+            io:format("Failed to get user tenants for ~s: ~p~n", [UserId, Reason]),
             {error, Reason}
     end.
 
@@ -588,7 +588,7 @@ do_get_tenant_stats(TenantId) ->
         {ok, Stats}
     catch
         _:Reason ->
-            lager:error("Failed to get tenant stats for ~s: ~p", [TenantId, Reason]),
+            io:format("Failed to get tenant stats for ~s: ~p~n", [TenantId, Reason]),
             {error, Reason}
     end.
 
@@ -641,7 +641,7 @@ do_cleanup_cache(State) ->
     
     if
         ExpiredCount > 0 ->
-            lager:debug("Cleaned up ~p expired tenant cache entries", [ExpiredCount]);
+            io:format("Cleaned up ~p expired tenant cache entries~n", [ExpiredCount]);
         true ->
             ok
     end.

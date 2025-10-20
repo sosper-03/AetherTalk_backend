@@ -18,7 +18,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    lager:info("Health check service started"),
+    io:format("Health check service started~n"),
     {ok, #state{}}.
 
 handle_call(_Request, _From, State) ->

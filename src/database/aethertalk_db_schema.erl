@@ -18,7 +18,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    lager:info("Database schema manager started"),
+    io:format("Database schema manager started~n"),
     {ok, #state{}}.
 
 handle_call(_Request, _From, State) ->
