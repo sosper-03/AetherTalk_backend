@@ -20,14 +20,9 @@
 %% @doc Register a new user
 register(UserData) ->
     case aethertalk_user_manager:register_user(UserData) of
-        {ok, UserId} ->
-            % Get the created user data
-            case aethertalk_user_manager:get_user(UserId) of
-                {ok, User} ->
-                    {ok, User};
-                Error ->
-                    Error
-            end;
+        {ok, User} ->
+            % register_user already returns the complete user record
+            {ok, User};
         Error ->
             Error
     end.

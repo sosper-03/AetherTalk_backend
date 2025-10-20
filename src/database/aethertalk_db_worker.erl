@@ -25,25 +25,80 @@ init(Args) ->
     process_flag(trap_exit, true),
     
     Host = proplists:get_value(host, Args, "localhost"),
-    _Port = proplists:get_value(port, Args, 5432),
+    Port = proplists:get_value(port, Args, 5432),
     Database = proplists:get_value(database, Args, "aethertalk"),
-    _Username = proplists:get_value(username, Args, "aethertalk"),
-    _Password = proplists:get_value(password, Args, ""),
-    _SSL = proplists:get_value(ssl, Args, false),
+    Username = proplists:get_value(username, Args, "aethertalk"),
+    Password = proplists:get_value(password, Args, ""),
+    SSL = proplists:get_value(ssl, Args, false),
     
-    % Temporary bypass for testing - create a mock connection
-    io:format("Database worker starting (mock mode for testing) - Host: ~s, DB: ~s~n", [Host, Database]),
-    {ok, #state{connection = undefined}}.
+    io:format("Database worker starting - Host: ~s:~p, DB: ~s, User: ~s~n", [Host, Port, Database, Username]),
+    
+    % Connect to PostgreSQL
+    ConnectOptions = case SSL of
+        true ->
+            % For Neon, use connection string format with endpoint parameter
+            ConnectionString = lists:flatten(io_lib:format(
+                "host=~s port=~p dbname=~s user=~s password=~s sslmode=require options=endpoint=ep-plain-heart-adeyfder",
+                [Host, Port, Database, Username, Password]
+            )),
+            [{connection_string, ConnectionString}];
+        false ->
+            [
+                {host, Host},
+                {port, Port},
+                {database, Database},
+                {username, Username},
+                {password, Password},
+                {ssl, false}
+            ]
+    end,
+    
+    case epgsql:connect(ConnectOptions) of
+        {ok, Connection} ->
+            io:format("Database connection established successfully~n"),
+            {ok, #state{connection = Connection}};
+        {error, Reason} ->
+            io:format("Database connection failed: ~p~n", [Reason]),
+            {stop, {connection_failed, Reason}}
+    end.
 
-handle_call({query, SQL, Params, _Timeout}, _From, #state{connection = undefined} = State) ->
-    % Mock response for testing
-    io:format("Mock database query: ~s with params ~p~n", [SQL, Params]),
-    {reply, {ok, {[], []}}, State};
+handle_call({query, SQL, Params, _Timeout}, _From, #state{connection = Connection} = State) ->
+    io:format("Database query: ~s with params ~p~n", [SQL, Params]),
+    
+    Result = case Connection of
+        undefined ->
+            {error, no_connection};
+        _ ->
+            case epgsql:equery(Connection, SQL, Params) of
+                {ok, Columns, Rows} ->
+                    {ok, {Columns, Rows}};
+                {ok, Count} when is_integer(Count) ->
+                    {ok, Count};
+                {error, Reason} ->
+                    {error, Reason};
+                Other ->
+                    Other
+            end
+    end,
+    
+    {reply, Result, State};
 
-handle_call({transaction, _Fun}, _From, #state{connection = undefined} = State) ->
-    % Mock transaction for testing
-    io:format("Mock database transaction~n"),
-    {reply, {ok, mock_transaction_result}, State};
+handle_call({transaction, Fun}, _From, #state{connection = Connection} = State) ->
+    io:format("Database transaction~n"),
+    
+    Result = case Connection of
+        undefined ->
+            {error, no_connection};
+        _ ->
+            try
+                epgsql:with_transaction(Connection, Fun)
+            catch
+                Error:Reason ->
+                    {error, {Error, Reason}}
+            end
+    end,
+    
+    {reply, Result, State};
 
 handle_call(_Request, _From, State) ->
     {reply, {error, unknown_request}, State}.

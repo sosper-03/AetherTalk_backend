@@ -1,35 +1,824 @@
+Exec: /usr/lib/erlang/erts-15.2.7/bin/erlexec -noinput +Bd -boot /workspace/project/AetherTalk_backend/_build/default/rel/aethertalk/releases/1.0.0/start -mode embedded -boot_var SYSTEM_LIB_DIR /usr/lib/erlang/lib -config /workspace/project/AetherTalk_backend/_build/default/rel/aethertalk/releases/1.0.0/sys.config -args_file /workspace/project/AetherTalk_backend/_build/default/rel/aethertalk/releases/1.0.0/vm.args -- foreground
+Root: /workspace/project/AetherTalk_backend/_build/default/rel/aethertalk
+/workspace/project/AetherTalk_backend/_build/default/rel/aethertalk
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.515348 ===
+    application: kernel
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.515451 ===
+    application: stdlib
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.515702 ===
+    supervisor: {local,sasl_safe_sup}
+    started: [{pid,<0.1492.0>},
+              {id,alarm_handler},
+              {mfargs,{alarm_handler,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,2000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.515803 ===
+    supervisor: {local,sasl_sup}
+    started: [{pid,<0.1491.0>},
+              {id,sasl_safe_sup},
+              {mfargs,{supervisor,start_link,
+                                  [{local,sasl_safe_sup},sasl,safe]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.516610 ===
+    supervisor: {local,sasl_sup}
+    started: [{pid,<0.1493.0>},
+              {id,release_handler},
+              {mfargs,{release_handler,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,2000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.516719 ===
+    application: sasl
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.516779 ===
+    application: crypto
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.516839 ===
+    application: asn1
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.516916 ===
+    application: public_key
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517125 ===
+    supervisor: {local,ssl_admin_sup}
+    started: [{pid,<0.1502.0>},
+              {id,ssl_pem_cache},
+              {mfargs,{ssl_pem_cache,start_link,[[]]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517214 ===
+    supervisor: {local,ssl_admin_sup}
+    started: [{pid,<0.1503.0>},
+              {id,ssl_manager},
+              {mfargs,{ssl_manager,start_link,[[{session_lifetime,600}]]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517279 ===
+    supervisor: {local,ssl_admin_sup}
+    started: [{pid,<0.1504.0>},
+              {id,tls_client_ticket_store},
+              {mfargs,{tls_client_ticket_store,start_link,[1000,7200]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517361 ===
+    supervisor: {local,ssl_sup}
+    started: [{pid,<0.1501.0>},
+              {id,ssl_admin_sup},
+              {mfargs,{ssl_admin_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517455 ===
+    supervisor: {local,tls_sup}
+    started: [{pid,<0.1507.0>},
+              {id,tls_connection_sup},
+              {mfargs,{tls_connection_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517507 ===
+    supervisor: {local,tls_server_sup}
+    started: [{pid,<0.1509.0>},
+              {id,ssl_listen_tracker_sup},
+              {mfargs,{ssl_listen_tracker_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517544 ===
+    supervisor: {local,tls_server_sup}
+    started: [{pid,<0.1510.0>},
+              {id,tls_server_session_ticket},
+              {mfargs,{tls_server_session_ticket_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517580 ===
+    supervisor: {local,tls_server_sup}
+    started: [{pid,<0.1511.0>},
+              {id,ssl_server_session_cache_sup},
+              {mfargs,{ssl_server_session_cache_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517622 ===
+    supervisor: {local,tls_server_sup}
+    started: [{pid,<0.1512.0>},
+              {id,ssl_upgrade_server_session_cache_sup},
+              {mfargs,{ssl_upgrade_server_session_cache_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517653 ===
+    supervisor: {local,tls_sup}
+    started: [{pid,<0.1508.0>},
+              {id,tls_server_sup},
+              {mfargs,{tls_server_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517682 ===
+    supervisor: {local,ssl_connection_sup}
+    started: [{pid,<0.1506.0>},
+              {id,tls_sup},
+              {mfargs,{tls_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517720 ===
+    supervisor: {local,dtls_sup}
+    started: [{pid,<0.1514.0>},
+              {id,dtls_connection_sup},
+              {mfargs,{dtls_connection_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517769 ===
+    supervisor: {local,dtls_server_sup}
+    started: [{pid,<0.1516.0>},
+              {id,dtls_listener_sup},
+              {mfargs,{dtls_listener_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517804 ===
+    supervisor: {local,dtls_server_sup}
+    started: [{pid,<0.1517.0>},
+              {id,dtls_server_session_cache_sup},
+              {mfargs,{dtls_server_session_cache_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517833 ===
+    supervisor: {local,dtls_sup}
+    started: [{pid,<0.1515.0>},
+              {id,dtls_server_sup},
+              {mfargs,{dtls_server_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517860 ===
+    supervisor: {local,ssl_connection_sup}
+    started: [{pid,<0.1513.0>},
+              {id,dtls_sup},
+              {mfargs,{dtls_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517887 ===
+    supervisor: {local,ssl_sup}
+    started: [{pid,<0.1505.0>},
+              {id,ssl_connection_sup},
+              {mfargs,{ssl_connection_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.517921 ===
+    application: ssl
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518001 ===
+    supervisor: {local,httpc_profile_sup}
+    started: [{pid,<0.1523.0>},
+              {id,httpc_manager},
+              {mfargs,{httpc_manager,start_link,
+                                     [default,only_session_cookies,inets]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518039 ===
+    supervisor: {local,httpc_sup}
+    started: [{pid,<0.1522.0>},
+              {id,httpc_profile_sup},
+              {mfargs,
+                  {httpc_profile_sup,start_link,
+                      [[{httpc,{default,only_session_cookies}}]]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518077 ===
+    supervisor: {local,httpc_sup}
+    started: [{pid,<0.1524.0>},
+              {id,httpc_handler_sup},
+              {mfargs,{httpc_handler_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518107 ===
+    supervisor: {local,inets_sup}
+    started: [{pid,<0.1521.0>},
+              {id,httpc_sup},
+              {mfargs,{httpc_sup,start_link,
+                                 [[{httpc,{default,only_session_cookies}}]]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518142 ===
+    supervisor: {local,inets_sup}
+    started: [{pid,<0.1525.0>},
+              {id,httpd_sup},
+              {mfargs,{httpd_sup,start_link,[[]]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518174 ===
+    application: inets
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518261 ===
+    supervisor: {local,runtime_tools_sup}
+    started: [{pid,<0.1529.0>},
+              {id,ttb_autostart},
+              {mfargs,{ttb_autostart,start_link,[]}},
+              {restart_type,temporary},
+              {significant,false},
+              {shutdown,3000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518320 ===
+    application: runtime_tools
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518424 ===
+    supervisor: {local,mnesia_sup}
+    started: [{pid,<0.1533.0>},
+              {id,mnesia_event},
+              {mfargs,{mnesia_sup,start_event,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,30000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518487 ===
+    supervisor: {local,mnesia_sup}
+    started: [{pid,<0.1534.0>},
+              {id,mnesia_ext_sup},
+              {mfargs,{mnesia_ext_sup,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518728 ===
+    supervisor: {local,mnesia_kernel_sup}
+    started: [{pid,<0.1536.0>},
+              {id,mnesia_monitor},
+              {mfargs,{mnesia_monitor,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,3000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518804 ===
+    supervisor: {local,mnesia_kernel_sup}
+    started: [{pid,<0.1537.0>},
+              {id,mnesia_subscr},
+              {mfargs,{mnesia_subscr,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,3000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518871 ===
+    supervisor: {local,mnesia_kernel_sup}
+    started: [{pid,<0.1538.0>},
+              {id,mnesia_locker},
+              {mfargs,{mnesia_locker,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,3000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.518997 ===
+    supervisor: {local,mnesia_kernel_sup}
+    started: [{pid,<0.1539.0>},
+              {id,mnesia_recover},
+              {mfargs,{mnesia_recover,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,180000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.519255 ===
+    supervisor: {local,mnesia_kernel_sup}
+    started: [{pid,<0.1540.0>},
+              {id,mnesia_tm},
+              {mfargs,{mnesia_tm,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,30000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.519326 ===
+    supervisor: {local,mnesia_kernel_sup}
+    started: [{pid,<0.1541.0>},
+              {id,mnesia_rpc},
+              {mfargs,{mnesia_rpc,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,3000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.519392 ===
+    supervisor: {local,mnesia_kernel_sup}
+    started: [{pid,<0.1542.0>},
+              {id,mnesia_checkpoint_sup},
+              {mfargs,{mnesia_checkpoint_sup,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.519480 ===
+    supervisor: {local,mnesia_kernel_sup}
+    started: [{pid,<0.1543.0>},
+              {id,mnesia_controller},
+              {mfargs,{mnesia_controller,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,3000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.519671 ===
+    supervisor: {local,mnesia_kernel_sup}
+    started: [{pid,<0.1544.0>},
+              {id,mnesia_late_loader},
+              {mfargs,{mnesia_late_loader,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,3000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.519726 ===
+    supervisor: {local,mnesia_sup}
+    started: [{pid,<0.1535.0>},
+              {id,mnesia_kernel_sup},
+              {mfargs,{mnesia_kernel_sup,start,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.519783 ===
+    application: mnesia
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.519815 ===
+    application: cowlib
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.519922 ===
+    supervisor: {local,ranch_sup}
+    started: [{pid,<0.1549.0>},
+              {id,ranch_server},
+              {mfargs,{ranch_server,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520007 ===
+    application: ranch
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520097 ===
+    supervisor: {local,cowboy_sup}
+    started: [{pid,<0.1553.0>},
+              {id,cowboy_clock},
+              {mfargs,{cowboy_clock,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520151 ===
+    application: cowboy
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520192 ===
+    application: jsx
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520237 ===
+    application: poolboy
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520276 ===
+    application: epgsql
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520326 ===
+    application: eredis
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520410 ===
+    application: quickrand
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520455 ===
+    application: uuid
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520825 ===
+    supervisor: {local,bcrypt_nif_pool_sup}
+    started: [{pid,<0.1558.0>},
+              {id,bcrypt_nif_pool},
+              {mfargs,{poolboy,start_link,
+                               [[{name,{local,bcrypt_nif_pool}},
+                                 {size,4},
+                                 {max_overflow,10},
+                                 {worker_module,bcrypt_nif_worker}],
+                                []]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520909 ===
+    supervisor: {local,bcrypt_sup}
+    started: [{pid,<0.1557.0>},
+              {id,bcrypt_nif_pool_sup},
+              {mfargs,{bcrypt_nif_pool_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,4294967295},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.520948 ===
+    application: bcrypt
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.533159 ===
+    application: xmerl
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.533288 ===
+    application: jiffy
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.535749 ===
+    supervisor: {local,jose_sup}
+    started: [{pid,<0.1567.0>},
+              {id,jose_server},
+              {mfargs,{jose_server,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.535879 ===
+    application: jose
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.535992 ===
+    supervisor: {local,gun_sup}
+    started: [{pid,<0.1571.0>},
+              {id,gun_conns_sup},
+              {mfargs,{gun_conns_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536058 ===
+    supervisor: {local,gun_sup}
+    started: [{pid,<0.1572.0>},
+              {id,gun_pools_sup},
+              {mfargs,{gun_pools_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536099 ===
+    application: gun
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536132 ===
+    application: unicode_util_compat
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536182 ===
+    application: idna
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536222 ===
+    application: mimerl
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536259 ===
+    application: certifi
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536320 ===
+    application: syntax_tools
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536402 ===
+    application: parse_trans
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536465 ===
+    application: ssl_verify_fun
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536509 ===
+    application: metrics
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536632 ===
+    supervisor: {local,hackney_sup}
+    started: [{pid,<0.1576.0>},
+              {id,hackney_manager},
+              {mfargs,{hackney_manager,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536693 ===
+    supervisor: {local,hackney_sup}
+    started: [{pid,<0.1577.0>},
+              {id,hackney_connections},
+              {mfargs,{hackney_connections,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536744 ===
+    application: hackney
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536781 ===
+    application: compiler
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536856 ===
+    supervisor: {local,gr_sup}
+    started: [{pid,<0.1581.0>},
+              {id,gr_counter_sup},
+              {mfargs,{gr_counter_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536903 ===
+    supervisor: {local,gr_sup}
+    started: [{pid,<0.1582.0>},
+              {id,gr_param_sup},
+              {mfargs,{gr_param_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536951 ===
+    supervisor: {local,gr_sup}
+    started: [{pid,<0.1583.0>},
+              {id,gr_manager_sup},
+              {mfargs,{gr_manager_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.536991 ===
+    application: goldrush
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.537071 ===
+    supervisor: {local,lager_sup}
+    started: [{pid,<0.1587.0>},
+              {id,lager},
+              {mfargs,{gen_event,start_link,[{local,lager_event}]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.537120 ===
+    supervisor: {local,lager_sup}
+    started: [{pid,<0.1588.0>},
+              {id,lager_handler_watcher_sup},
+              {mfargs,{lager_handler_watcher_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.537312 ===
+    supervisor: {local,lager_sup}
+    started: [{pid,<0.1589.0>},
+              {id,lager_crash_log},
+              {mfargs,
+                  {lager_crash_log,start_link,
+                      ["crash.log",65536,10485760,
+                       [{hour,0}],
+                       5,lager_rotator_default]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.553666 ===
+    application: lager
+    started_at: 'aethertalk@127.0.0.1'
+
+2025-10-20 18:42:14.553 [info] <0.1438.0> Application lager started on node 'aethertalk@127.0.0.1'
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.553806 ===
+    application: recon
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.553883 ===
+    application: gen_smtp
+    started_at: 'aethertalk@127.0.0.1'
+
+2025-10-20 18:42:14.553 [info] <0.1438.0> Application recon started on node 'aethertalk@127.0.0.1'
+2025-10-20 18:42:14.553 [info] <0.1438.0> Application gen_smtp started on node 'aethertalk@127.0.0.1'
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.554041 ===
+    supervisor: {local,eini_sup}
+    started: [{pid,<0.1610.0>},
+              {id,eini},
+              {mfargs,{eini,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+2025-10-20 18:42:14.554 [info] <0.1438.0> Application eini started on node 'aethertalk@127.0.0.1'
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.554130 ===
+    application: eini
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.554187 ===
+    application: base16
+    started_at: 'aethertalk@127.0.0.1'
+
+2025-10-20 18:42:14.554 [info] <0.1438.0> Application base16 started on node 'aethertalk@127.0.0.1'
 Starting AetherTalk application
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.554290 ===
+    supervisor: {local,lhttpc_sup}
+    started: [{pid,<0.1614.0>},
+              {id,lhttpc_manager},
+              {mfargs,{lhttpc_manager,start_link,[[{name,lhttpc_manager}]]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,10000},
+              {child_type,worker}]
+
+2025-10-20 18:42:14.554 [info] <0.1438.0> Application lhttpc started on node 'aethertalk@127.0.0.1'
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.554422 ===
+    application: lhttpc
+    started_at: 'aethertalk@127.0.0.1'
+
 Created media directory: ./media
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.554496 ===
+    application: erlcloud
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.554558 ===
+    application: emqtt
+    started_at: 'aethertalk@127.0.0.1'
+
+2025-10-20 18:42:14.554 [info] <0.1438.0> Application erlcloud started on node 'aethertalk@127.0.0.1'
 Created media directory: ./media/images
+2025-10-20 18:42:14.554 [info] <0.1438.0> Application emqtt started on node 'aethertalk@127.0.0.1'
 Created media directory: ./media/videos
 Created media directory: ./media/audio
 Created media directory: ./media/documents
 Created media directory: ./media/thumbnails
 Created media directory: ./media/temp
-Configuration manager started
-Metrics collector started
-Health check service started
-Rate limiter started
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
-Database worker connected successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.555338 ===
+    supervisor: {local,inet_gethost_native_sup}
+    started: [{pid,<0.1624.0>},{mfa,{inet_gethost_native,init,[[]]}}]
+
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+Database worker starting - Host: localhost:5432, DB: aethertalk, User: aethertalk
+Database connection established successfully
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.808735 ===
+    supervisor: {local,aethertalk_db_sup}
+    started: [{pid,<0.1619.0>},
+              {id,postgres_pool},
+              {mfargs,{poolboy,start_link,
+                               [[{name,{local,postgres_pool}},
+                                 {worker_module,aethertalk_db_worker},
+                                 {size,20},
+                                 {max_overflow,10}],
+                                [{host,"localhost"},
+                                 {port,5432},
+                                 {database,"aethertalk"},
+                                 {username,"aethertalk"},
+                                 {password,"aethertalk123"},
+                                 {ssl,false},
+                                 {pool_size,20},
+                                 {max_overflow,10}]]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
 Redis worker connected successfully
 Redis worker connected successfully
 Redis worker connected successfully
@@ -40,28 +829,2960 @@ Redis worker connected successfully
 Redis worker connected successfully
 Redis worker connected successfully
 Redis worker connected successfully
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.809559 ===
+    supervisor: {local,aethertalk_db_sup}
+    started: [{pid,<0.1663.0>},
+              {id,redis_pool},
+              {mfargs,
+                  {poolboy,start_link,
+                      [[{name,{local,redis_pool}},
+                        {worker_module,aethertalk_redis_worker},
+                        {size,10},
+                        {max_overflow,5}],
+                       [{host,
+                            "redis-13729.c341.af-south-1-1.ec2.redns.redis-cloud.com"},
+                        {port,13729},
+                        {password,"E3ynQ1MjRf1lrKkkLqgzvKbzlEwkkjmo"},
+                        {database,0},
+                        {pool_size,10}]]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
 Database schema manager started
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.809865 ===
+    supervisor: {local,aethertalk_db_sup}
+    started: [{pid,<0.1685.0>},
+              {id,aethertalk_db_schema},
+              {mfargs,{aethertalk_db_schema,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
 Database migration manager started
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.810035 ===
+    supervisor: {local,aethertalk_db_sup}
+    started: [{pid,<0.1686.0>},
+              {id,aethertalk_db_migration},
+              {mfargs,{aethertalk_db_migration,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
 User manager started
-Message router started
-Presence manager started
-Call manager started
-Media processor started
-Translation service started with providers: [libre]
-Notification service started
-Group Manager started
-Status Manager started
-Reactions Manager started
-Polls Manager started
-Disappearing Messages service started
-Location Service started
-Encryption service started
-MFA service started
-Failed to start AetherTalk application: {error,
-                                         {shutdown,
-                                          {failed_to_start_child,
-                                           aethertalk_api_sup,
-                                           {shutdown,
-                                            {failed_to_start_child,
-                                             aethertalk_http_listener,
-                                             eaddrinuse}}}}}
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.810184 ===
+    supervisor: {local,aethertalk_sup_minimal}
+    started: [{pid,<0.1618.0>},
+              {id,aethertalk_db_sup},
+              {mfargs,{aethertalk_db_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.810343 ===
+    supervisor: {local,aethertalk_sup_minimal}
+    started: [{pid,<0.1687.0>},
+              {id,aethertalk_user_manager},
+              {mfargs,{aethertalk_user_manager,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+Attempting to start HTTP server on port 12000
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.810860 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1691.0>},
+              {id,{ranch_conns_sup,1}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,1,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.811083 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1692.0>},
+              {id,{ranch_conns_sup,2}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,2,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.811246 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1693.0>},
+              {id,{ranch_conns_sup,3}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,3,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.811443 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1694.0>},
+              {id,{ranch_conns_sup,4}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,4,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.811638 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1695.0>},
+              {id,{ranch_conns_sup,5}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,5,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.811769 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1696.0>},
+              {id,{ranch_conns_sup,6}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,6,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.811876 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1697.0>},
+              {id,{ranch_conns_sup,7}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,7,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.811974 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1698.0>},
+              {id,{ranch_conns_sup,8}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,8,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.812079 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1699.0>},
+              {id,{ranch_conns_sup,9}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,9,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.812198 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1700.0>},
+              {id,{ranch_conns_sup,10}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,10,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.812296 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1701.0>},
+              {id,{ranch_conns_sup,11}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,11,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.812432 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1702.0>},
+              {id,{ranch_conns_sup,12}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,12,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.812568 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1703.0>},
+              {id,{ranch_conns_sup,13}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,13,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.812708 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1704.0>},
+              {id,{ranch_conns_sup,14}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,14,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.812829 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1705.0>},
+              {id,{ranch_conns_sup,15}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,15,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.812955 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1706.0>},
+              {id,{ranch_conns_sup,16}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,16,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.813054 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1707.0>},
+              {id,{ranch_conns_sup,17}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,17,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.813172 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1708.0>},
+              {id,{ranch_conns_sup,18}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,18,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.813289 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1709.0>},
+              {id,{ranch_conns_sup,19}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,19,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.813424 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1710.0>},
+              {id,{ranch_conns_sup,20}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,20,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.813592 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1711.0>},
+              {id,{ranch_conns_sup,21}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,21,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.813737 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1712.0>},
+              {id,{ranch_conns_sup,22}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,22,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.813845 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1713.0>},
+              {id,{ranch_conns_sup,23}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,23,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.813943 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1714.0>},
+              {id,{ranch_conns_sup,24}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,24,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.814067 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1715.0>},
+              {id,{ranch_conns_sup,25}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,25,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.814164 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1716.0>},
+              {id,{ranch_conns_sup,26}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,26,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.814277 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1717.0>},
+              {id,{ranch_conns_sup,27}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,27,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.814437 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1718.0>},
+              {id,{ranch_conns_sup,28}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,28,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.814582 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1719.0>},
+              {id,{ranch_conns_sup,29}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,29,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.814718 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1720.0>},
+              {id,{ranch_conns_sup,30}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,30,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.814871 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1721.0>},
+              {id,{ranch_conns_sup,31}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,31,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.814993 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1722.0>},
+              {id,{ranch_conns_sup,32}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,32,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.815080 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1723.0>},
+              {id,{ranch_conns_sup,33}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,33,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.815160 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1724.0>},
+              {id,{ranch_conns_sup,34}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,34,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.815260 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1725.0>},
+              {id,{ranch_conns_sup,35}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,35,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.815370 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1726.0>},
+              {id,{ranch_conns_sup,36}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,36,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.815489 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1727.0>},
+              {id,{ranch_conns_sup,37}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,37,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.815616 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1728.0>},
+              {id,{ranch_conns_sup,38}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,38,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.815717 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1729.0>},
+              {id,{ranch_conns_sup,39}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,39,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.815858 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1730.0>},
+              {id,{ranch_conns_sup,40}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,40,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.815994 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1731.0>},
+              {id,{ranch_conns_sup,41}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,41,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.816101 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1732.0>},
+              {id,{ranch_conns_sup,42}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,42,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.816215 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1733.0>},
+              {id,{ranch_conns_sup,43}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,43,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.816336 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1734.0>},
+              {id,{ranch_conns_sup,44}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,44,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.816477 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1735.0>},
+              {id,{ranch_conns_sup,45}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,45,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.816602 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1736.0>},
+              {id,{ranch_conns_sup,46}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,46,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.816730 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1737.0>},
+              {id,{ranch_conns_sup,47}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,47,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.816884 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1738.0>},
+              {id,{ranch_conns_sup,48}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,48,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.816998 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1739.0>},
+              {id,{ranch_conns_sup,49}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,49,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.817143 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1740.0>},
+              {id,{ranch_conns_sup,50}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,50,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.817315 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1741.0>},
+              {id,{ranch_conns_sup,51}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,51,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.817506 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1742.0>},
+              {id,{ranch_conns_sup,52}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,52,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.817613 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1743.0>},
+              {id,{ranch_conns_sup,53}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,53,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.817720 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1744.0>},
+              {id,{ranch_conns_sup,54}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,54,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.817820 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1745.0>},
+              {id,{ranch_conns_sup,55}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,55,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.817886 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1746.0>},
+              {id,{ranch_conns_sup,56}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,56,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.817984 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1747.0>},
+              {id,{ranch_conns_sup,57}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,57,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.818071 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1748.0>},
+              {id,{ranch_conns_sup,58}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,58,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.818181 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1749.0>},
+              {id,{ranch_conns_sup,59}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,59,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.818317 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1750.0>},
+              {id,{ranch_conns_sup,60}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,60,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.818451 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1751.0>},
+              {id,{ranch_conns_sup,61}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,61,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.818545 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1752.0>},
+              {id,{ranch_conns_sup,62}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,62,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.818642 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1753.0>},
+              {id,{ranch_conns_sup,63}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,63,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.818731 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1754.0>},
+              {id,{ranch_conns_sup,64}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,64,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.818822 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1755.0>},
+              {id,{ranch_conns_sup,65}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,65,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.818919 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1756.0>},
+              {id,{ranch_conns_sup,66}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,66,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819026 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1757.0>},
+              {id,{ranch_conns_sup,67}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,67,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819118 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1758.0>},
+              {id,{ranch_conns_sup,68}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,68,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819209 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1759.0>},
+              {id,{ranch_conns_sup,69}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,69,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819298 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1760.0>},
+              {id,{ranch_conns_sup,70}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,70,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819418 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1761.0>},
+              {id,{ranch_conns_sup,71}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,71,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819512 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1762.0>},
+              {id,{ranch_conns_sup,72}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,72,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819633 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1763.0>},
+              {id,{ranch_conns_sup,73}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,73,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819741 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1764.0>},
+              {id,{ranch_conns_sup,74}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,74,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819824 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1765.0>},
+              {id,{ranch_conns_sup,75}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,75,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.819930 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1766.0>},
+              {id,{ranch_conns_sup,76}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,76,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.820031 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1767.0>},
+              {id,{ranch_conns_sup,77}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,77,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.820157 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1768.0>},
+              {id,{ranch_conns_sup,78}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,78,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.820278 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1769.0>},
+              {id,{ranch_conns_sup,79}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,79,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.820371 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1770.0>},
+              {id,{ranch_conns_sup,80}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,80,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.820503 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1771.0>},
+              {id,{ranch_conns_sup,81}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,81,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.820604 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1772.0>},
+              {id,{ranch_conns_sup,82}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,82,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.820717 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1773.0>},
+              {id,{ranch_conns_sup,83}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,83,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.820837 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1774.0>},
+              {id,{ranch_conns_sup,84}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,84,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.820948 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1775.0>},
+              {id,{ranch_conns_sup,85}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,85,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.821114 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1776.0>},
+              {id,{ranch_conns_sup,86}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,86,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.821225 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1777.0>},
+              {id,{ranch_conns_sup,87}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,87,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.821342 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1778.0>},
+              {id,{ranch_conns_sup,88}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,88,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.821459 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1779.0>},
+              {id,{ranch_conns_sup,89}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,89,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.821635 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1780.0>},
+              {id,{ranch_conns_sup,90}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,90,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.821782 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1781.0>},
+              {id,{ranch_conns_sup,91}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,91,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.821915 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1782.0>},
+              {id,{ranch_conns_sup,92}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,92,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.822056 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1783.0>},
+              {id,{ranch_conns_sup,93}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,93,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.822149 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1784.0>},
+              {id,{ranch_conns_sup,94}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,94,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.822274 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1785.0>},
+              {id,{ranch_conns_sup,95}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,95,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.822396 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1786.0>},
+              {id,{ranch_conns_sup,96}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,96,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.822505 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1787.0>},
+              {id,{ranch_conns_sup,97}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,97,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.822607 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1788.0>},
+              {id,{ranch_conns_sup,98}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,98,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.822718 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1789.0>},
+              {id,{ranch_conns_sup,99}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,99,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.822826 ===
+    supervisor: {<0.1690.0>,ranch_conns_sup_sup}
+    started: [{pid,<0.1790.0>},
+              {id,{ranch_conns_sup,100}},
+              {mfargs,
+                  {ranch_conns_sup,start_link,
+                      [aethertalk_http_listener,100,ranch_tcp,
+                       #{num_acceptors => 100,
+                         socket_opts => [{port,12000},{ip,{0,0,0,0}}],
+                         connection_type => supervisor},
+                       cowboy_clear,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.822902 ===
+    supervisor: {<0.1689.0>,ranch_listener_sup}
+    started: [{pid,<0.1690.0>},
+              {id,ranch_conns_sup_sup},
+              {mfargs,
+                  {ranch_conns_sup_sup,start_link,
+                      [aethertalk_http_listener,ranch_tcp,cowboy_clear,
+                       logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.823248 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1792.0>},
+              {id,{acceptor,<0.1791.0>,1}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,1,#Port<0.27>,
+                                       ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.823490 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1793.0>},
+              {id,{acceptor,<0.1791.0>,2}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,2,#Port<0.27>,
+                                       ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.823686 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1794.0>},
+              {id,{acceptor,<0.1791.0>,3}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,3,#Port<0.27>,
+                                       ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.823789 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1795.0>},
+              {id,{acceptor,<0.1791.0>,4}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,4,#Port<0.27>,
+                                       ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.824487 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1796.0>},
+              {id,{acceptor,<0.1791.0>,5}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,5,#Port<0.27>,
+                                       ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.824639 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1797.0>},
+              {id,{acceptor,<0.1791.0>,6}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,6,#Port<0.27>,
+                                       ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.824734 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1798.0>},
+              {id,{acceptor,<0.1791.0>,7}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,7,#Port<0.27>,
+                                       ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.824838 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1799.0>},
+              {id,{acceptor,<0.1791.0>,8}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,8,#Port<0.27>,
+                                       ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.824920 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1800.0>},
+              {id,{acceptor,<0.1791.0>,9}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,9,#Port<0.27>,
+                                       ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825017 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1801.0>},
+              {id,{acceptor,<0.1791.0>,10}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,10,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825108 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1802.0>},
+              {id,{acceptor,<0.1791.0>,11}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,11,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825171 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1803.0>},
+              {id,{acceptor,<0.1791.0>,12}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,12,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825288 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1804.0>},
+              {id,{acceptor,<0.1791.0>,13}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,13,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825408 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1805.0>},
+              {id,{acceptor,<0.1791.0>,14}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,14,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825510 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1806.0>},
+              {id,{acceptor,<0.1791.0>,15}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,15,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825605 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1807.0>},
+              {id,{acceptor,<0.1791.0>,16}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,16,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825694 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1808.0>},
+              {id,{acceptor,<0.1791.0>,17}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,17,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825775 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1809.0>},
+              {id,{acceptor,<0.1791.0>,18}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,18,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825857 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1810.0>},
+              {id,{acceptor,<0.1791.0>,19}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,19,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.825972 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1811.0>},
+              {id,{acceptor,<0.1791.0>,20}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,20,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826057 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1812.0>},
+              {id,{acceptor,<0.1791.0>,21}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,21,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826183 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1813.0>},
+              {id,{acceptor,<0.1791.0>,22}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,22,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826280 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1814.0>},
+              {id,{acceptor,<0.1791.0>,23}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,23,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826366 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1815.0>},
+              {id,{acceptor,<0.1791.0>,24}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,24,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826492 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1816.0>},
+              {id,{acceptor,<0.1791.0>,25}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,25,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826584 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1817.0>},
+              {id,{acceptor,<0.1791.0>,26}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,26,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826676 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1818.0>},
+              {id,{acceptor,<0.1791.0>,27}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,27,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826767 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1819.0>},
+              {id,{acceptor,<0.1791.0>,28}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,28,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826854 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1820.0>},
+              {id,{acceptor,<0.1791.0>,29}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,29,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.826945 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1821.0>},
+              {id,{acceptor,<0.1791.0>,30}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,30,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.827028 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1822.0>},
+              {id,{acceptor,<0.1791.0>,31}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,31,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.827121 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1823.0>},
+              {id,{acceptor,<0.1791.0>,32}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,32,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.827226 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1824.0>},
+              {id,{acceptor,<0.1791.0>,33}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,33,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.827353 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1825.0>},
+              {id,{acceptor,<0.1791.0>,34}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,34,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.827471 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1826.0>},
+              {id,{acceptor,<0.1791.0>,35}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,35,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.827577 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1827.0>},
+              {id,{acceptor,<0.1791.0>,36}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,36,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.827693 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1828.0>},
+              {id,{acceptor,<0.1791.0>,37}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,37,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.827776 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1829.0>},
+              {id,{acceptor,<0.1791.0>,38}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,38,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.827893 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1830.0>},
+              {id,{acceptor,<0.1791.0>,39}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,39,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828004 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1831.0>},
+              {id,{acceptor,<0.1791.0>,40}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,40,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828082 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1832.0>},
+              {id,{acceptor,<0.1791.0>,41}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,41,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828176 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1833.0>},
+              {id,{acceptor,<0.1791.0>,42}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,42,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828263 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1834.0>},
+              {id,{acceptor,<0.1791.0>,43}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,43,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828344 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1835.0>},
+              {id,{acceptor,<0.1791.0>,44}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,44,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828478 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1836.0>},
+              {id,{acceptor,<0.1791.0>,45}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,45,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828566 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1837.0>},
+              {id,{acceptor,<0.1791.0>,46}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,46,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828651 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1838.0>},
+              {id,{acceptor,<0.1791.0>,47}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,47,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828733 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1839.0>},
+              {id,{acceptor,<0.1791.0>,48}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,48,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828814 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1840.0>},
+              {id,{acceptor,<0.1791.0>,49}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,49,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.828931 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1841.0>},
+              {id,{acceptor,<0.1791.0>,50}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,50,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829013 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1842.0>},
+              {id,{acceptor,<0.1791.0>,51}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,51,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829093 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1843.0>},
+              {id,{acceptor,<0.1791.0>,52}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,52,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829178 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1844.0>},
+              {id,{acceptor,<0.1791.0>,53}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,53,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829267 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1845.0>},
+              {id,{acceptor,<0.1791.0>,54}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,54,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829390 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1846.0>},
+              {id,{acceptor,<0.1791.0>,55}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,55,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829517 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1847.0>},
+              {id,{acceptor,<0.1791.0>,56}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,56,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829630 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1848.0>},
+              {id,{acceptor,<0.1791.0>,57}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,57,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829708 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1849.0>},
+              {id,{acceptor,<0.1791.0>,58}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,58,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829849 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1850.0>},
+              {id,{acceptor,<0.1791.0>,59}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,59,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829906 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1851.0>},
+              {id,{acceptor,<0.1791.0>,60}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,60,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.829994 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1852.0>},
+              {id,{acceptor,<0.1791.0>,61}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,61,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.830084 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1853.0>},
+              {id,{acceptor,<0.1791.0>,62}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,62,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.830220 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1854.0>},
+              {id,{acceptor,<0.1791.0>,63}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,63,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.830321 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1855.0>},
+              {id,{acceptor,<0.1791.0>,64}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,64,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.830444 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1856.0>},
+              {id,{acceptor,<0.1791.0>,65}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,65,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.830543 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1857.0>},
+              {id,{acceptor,<0.1791.0>,66}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,66,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.830630 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1858.0>},
+              {id,{acceptor,<0.1791.0>,67}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,67,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.830733 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1859.0>},
+              {id,{acceptor,<0.1791.0>,68}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,68,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.830848 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1860.0>},
+              {id,{acceptor,<0.1791.0>,69}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,69,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.830947 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1861.0>},
+              {id,{acceptor,<0.1791.0>,70}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,70,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831047 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1862.0>},
+              {id,{acceptor,<0.1791.0>,71}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,71,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831139 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1863.0>},
+              {id,{acceptor,<0.1791.0>,72}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,72,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831218 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1864.0>},
+              {id,{acceptor,<0.1791.0>,73}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,73,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831313 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1865.0>},
+              {id,{acceptor,<0.1791.0>,74}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,74,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831417 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1866.0>},
+              {id,{acceptor,<0.1791.0>,75}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,75,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831503 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1867.0>},
+              {id,{acceptor,<0.1791.0>,76}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,76,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831577 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1868.0>},
+              {id,{acceptor,<0.1791.0>,77}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,77,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831669 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1869.0>},
+              {id,{acceptor,<0.1791.0>,78}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,78,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831734 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1870.0>},
+              {id,{acceptor,<0.1791.0>,79}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,79,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831789 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1871.0>},
+              {id,{acceptor,<0.1791.0>,80}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,80,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831880 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1872.0>},
+              {id,{acceptor,<0.1791.0>,81}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,81,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.831956 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1873.0>},
+              {id,{acceptor,<0.1791.0>,82}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,82,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832032 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1874.0>},
+              {id,{acceptor,<0.1791.0>,83}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,83,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832095 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1875.0>},
+              {id,{acceptor,<0.1791.0>,84}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,84,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832141 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1876.0>},
+              {id,{acceptor,<0.1791.0>,85}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,85,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832191 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1877.0>},
+              {id,{acceptor,<0.1791.0>,86}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,86,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832259 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1878.0>},
+              {id,{acceptor,<0.1791.0>,87}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,87,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832405 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1879.0>},
+              {id,{acceptor,<0.1791.0>,88}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,88,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832513 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1880.0>},
+              {id,{acceptor,<0.1791.0>,89}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,89,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832609 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1881.0>},
+              {id,{acceptor,<0.1791.0>,90}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,90,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832706 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1882.0>},
+              {id,{acceptor,<0.1791.0>,91}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,91,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832801 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1883.0>},
+              {id,{acceptor,<0.1791.0>,92}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,92,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832883 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1884.0>},
+              {id,{acceptor,<0.1791.0>,93}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,93,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.832938 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1885.0>},
+              {id,{acceptor,<0.1791.0>,94}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,94,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.833079 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1886.0>},
+              {id,{acceptor,<0.1791.0>,95}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,95,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.833209 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1887.0>},
+              {id,{acceptor,<0.1791.0>,96}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,96,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.833293 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1888.0>},
+              {id,{acceptor,<0.1791.0>,97}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,97,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.833416 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1889.0>},
+              {id,{acceptor,<0.1791.0>,98}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,98,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+HTTP server started successfully on port 12000 with PID <0.1689.0>
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.833573 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1890.0>},
+              {id,{acceptor,<0.1791.0>,99}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,99,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+WebSocket manager started
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.833670 ===
+    supervisor: {<0.1791.0>,ranch_acceptors_sup}
+    started: [{pid,<0.1891.0>},
+              {id,{acceptor,<0.1791.0>,100}},
+              {mfargs,{ranch_acceptor,start_link,
+                                      [aethertalk_http_listener,100,
+                                       #Port<0.27>,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,brutal_kill},
+              {child_type,worker}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.833776 ===
+    supervisor: {<0.1689.0>,ranch_listener_sup}
+    started: [{pid,<0.1791.0>},
+              {id,ranch_acceptors_sup},
+              {mfargs,
+                  {ranch_acceptors_sup,start_link,
+                      [aethertalk_http_listener,ranch_tcp,logger]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.834308 ===
+    supervisor: {local,aethertalk_api_sup}
+    started: [{pid,<0.1892.0>},
+              {id,aethertalk_websocket_manager},
+              {mfargs,{aethertalk_websocket_manager,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,5000},
+              {child_type,worker}]
+
+AetherTalk application started successfully (minimal mode)
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.834420 ===
+    supervisor: {local,aethertalk_sup_minimal}
+    started: [{pid,<0.1688.0>},
+              {id,aethertalk_api_sup},
+              {mfargs,{aethertalk_api_sup,start_link,[]}},
+              {restart_type,permanent},
+              {significant,false},
+              {shutdown,infinity},
+              {child_type,supervisor}]
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.834535 ===
+    application: aethertalk
+    started_at: 'aethertalk@127.0.0.1'
+
+2025-10-20 18:42:14.834 [info] <0.1438.0> Application aethertalk started on node 'aethertalk@127.0.0.1'
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.834623 ===
+    application: wx
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.834697 ===
+    application: et
+    started_at: 'aethertalk@127.0.0.1'
+
+2025-10-20 18:42:14.834 [info] <0.1438.0> Application wx started on node 'aethertalk@127.0.0.1'
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.834755 ===
+    application: observer
+    started_at: 'aethertalk@127.0.0.1'
+
+=PROGRESS REPORT==== 20-Oct-2025::18:42:14.834821 ===
+    application: tools
+    started_at: 'aethertalk@127.0.0.1'
+
+2025-10-20 18:42:14.834 [info] <0.1438.0> Application et started on node 'aethertalk@127.0.0.1'
+2025-10-20 18:42:14.834 [info] <0.1438.0> Application observer started on node 'aethertalk@127.0.0.1'
+2025-10-20 18:42:14.834 [info] <0.1438.0> Application tools started on node 'aethertalk@127.0.0.1'
+Received registration request body: <<"{\"phone_number\":\"+1234567894\",\"username\":\"testuser5\",\"email\":\"test5@example.com\",\"password\":\"testpass123\",\"full_name\":\"Test User 5\"}">>
+Parsed JSON data: #{<<"email">> => <<"test5@example.com">>,
+                    <<"full_name">> => <<"Test User 5">>,
+                    <<"password">> => <<"testpass123">>,
+                    <<"phone_number">> => <<"+1234567894">>,
+                    <<"username">> => <<"testuser5">>}
+Database query: SELECT id, phone_number, username, full_name, email, password_hash,
+                  avatar_url, status, last_seen, is_verified, 
+                  phone_verified, is_active,
+                  created_at, updated_at
+           FROM users WHERE phone_number = $1 with params [<<"+1234567894">>]
+Database query: INSERT INTO users (phone_number, username, full_name, email, password_hash) 
+                           VALUES ($1, $2, $3, $4, $5) RETURNING id, created_at with params [<<"+1234567894">>,
+                                                                                             <<"testuser5">>,
+                                                                                             <<"Test User 5">>,
+                                                                                             <<"test5@example.com">>,
+                                                                                             <<"7E6E0C3079A08C5CC6036789B57E951F65F82383913BA1A49AE992544F1B4B6E">>]
+User registered successfully: <<"343658ac-a908-471a-9742-ceb7b856dec4">>
+UserId type: true, value: <<"343658ac-a908-471a-9742-ceb7b856dec4">>

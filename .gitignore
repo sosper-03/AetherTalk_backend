@@ -84,3 +84,7 @@ config/cloud-credentials.json
 # Docker volumes
 postgres_data/
 redis_data/
+
+# Server logs
+server.log
+*.log

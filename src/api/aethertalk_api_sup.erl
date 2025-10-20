@@ -82,7 +82,11 @@ init([]) ->
             ok;
         {error, eaddrinuse} ->
             io:format("Port ~p is already in use, trying to stop existing listener~n", [HttpPort]),
-            cowboy:stop_listener(aethertalk_http_listener),
+            try
+                cowboy:stop_listener(aethertalk_http_listener)
+            catch
+                _:_ -> ok  % Ignore errors if listener doesn't exist
+            end,
             timer:sleep(1000),
             case cowboy:start_clear(aethertalk_http_listener,
                 #{socket_opts => [{port, HttpPort}, {ip, {0,0,0,0}}], num_acceptors => 100},
