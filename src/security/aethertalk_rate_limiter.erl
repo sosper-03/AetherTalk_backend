@@ -21,7 +21,10 @@
     reset_rate_limit/2,
     set_custom_limit/4,
     get_blocked_users/0,
-    cleanup_expired_entries/0
+    cleanup_expired_entries/0,
+    check_http_rate_limit/2,
+    get_user_id_from_request/1,
+    get_client_ip/1
 ]).
 
 -include("aethertalk.hrl").
@@ -207,8 +210,6 @@ check_limit(UserId, Action, ClientIP, Limit, Window, #state{rate_limits = RateLi
             log_rate_limit_violation(UserId, Action, ClientIP, ip_limit),
             {error, ip_limit_exceeded};
         {Error, _} ->
-            Error;
-        {_, Error} ->
             Error
     end.
 
@@ -314,7 +315,7 @@ do_reset_rate_limit(UserId, Action, #state{rate_limits = RateLimits}) ->
     lager:info("Reset rate limit for user ~p, action ~p", [UserId, Action]),
     {ok, reset}.
 
-do_set_custom_limit(UserId, Action, Limit, Window, State) ->
+do_set_custom_limit(UserId, Action, Limit, Window, _State) ->
     % Store custom limit in database for persistence
     SQL = "INSERT INTO custom_rate_limits (user_id, action, limit_count, window_seconds, created_at) 
            VALUES ($1, $2, $3, $4, NOW())

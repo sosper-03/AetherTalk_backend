@@ -1,8 +1,14 @@
-# AetherTalk Dockerfile
-FROM erlang:24-alpine AS builder
+# Multi-stage Dockerfile for AetherTalk Backend
+# Production-ready Erlang/OTP application
+FROM erlang:27-alpine AS builder
 
 # Install build dependencies
-RUN apk add --no-cache git
+RUN apk add --no-cache \
+    git \
+    build-base \
+    openssl-dev \
+    ncurses-dev \
+    wget
 
 # Set working directory
 WORKDIR /app
@@ -14,46 +20,59 @@ COPY rebar.config rebar.lock ./
 COPY src/ src/
 COPY include/ include/
 COPY priv/ priv/
-COPY config/ config/
+COPY test/ test/
 
-# Get dependencies and compile
+# Build the application
 RUN rebar3 get-deps
 RUN rebar3 compile
-RUN rebar3 release
+RUN rebar3 as prod release
 
 # Production stage
-FROM alpine:3.16
+FROM alpine:3.18
 
 # Install runtime dependencies
 RUN apk add --no-cache \
-    ncurses-libs \
-    libstdc++ \
     openssl \
-    ca-certificates
+    ncurses \
+    libstdc++ \
+    bash \
+    curl \
+    ca-certificates \
+    wget
 
-# Create app user
+# Create application user
 RUN addgroup -g 1000 aethertalk && \
-    adduser -D -s /bin/sh -u 1000 -G aethertalk aethertalk
+    adduser -D -s /bin/bash -u 1000 -G aethertalk aethertalk
 
 # Set working directory
-WORKDIR /app
+WORKDIR /opt/aethertalk
 
-# Copy release from builder stage
-COPY --from=builder /app/_build/default/rel/aethertalk ./
-COPY --from=builder /app/priv/schema.sql ./priv/
+# Copy the release from builder stage
+COPY --from=builder /app/_build/prod/rel/aethertalk ./
+COPY --from=builder /app/priv ./priv
 
-# Change ownership
-RUN chown -R aethertalk:aethertalk /app
+# Create necessary directories
+RUN mkdir -p /opt/aethertalk/logs \
+             /opt/aethertalk/data \
+             /opt/aethertalk/uploads \
+             /opt/aethertalk/recordings && \
+    chown -R aethertalk:aethertalk /opt/aethertalk
 
-# Switch to app user
+# Switch to application user
 USER aethertalk
 
 # Expose ports
-EXPOSE 8080 8081
+EXPOSE 8080 8443 4369 9100-9200
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8080/api/health || exit 1
+
+# Environment variables
+ENV ERLANG_COOKIE=aethertalk_production_cookie
+ENV NODE_NAME=aethertalk@localhost
+ENV PORT=8080
+ENV SSL_PORT=8443
 
 # Start the application
 CMD ["./bin/aethertalk", "foreground"]
