@@ -73,6 +73,14 @@ uploads/
 config/prod.config
 config/secrets.config
 
+# Firebase Admin SDK (contains private keys)
+config/firebase-admin-sdk.json
+*firebase-adminsdk*.json
+
+# Cloud service credentials
+.env.cloud
+config/cloud-credentials.json
+
 # Docker volumes
 postgres_data/
 redis_data/
