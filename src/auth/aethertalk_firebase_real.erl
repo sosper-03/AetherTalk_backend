@@ -79,7 +79,7 @@ init([]) ->
         {ok, ConfigData} ->
             jsx:decode(ConfigData, [return_maps]);
         {error, Reason} ->
-            lager:warning("Failed to load Firebase Admin SDK config: ~p", [Reason]),
+            io:format("Failed to load Firebase Admin SDK config: ~p~n~n", [Reason]),
             #{}
     end,
     
@@ -89,7 +89,7 @@ init([]) ->
         {ssl, [{verify, verify_none}]}
     ],
     
-    lager:info("Firebase Real integration started for project: ~s", [ProjectId]),
+    io:format("Firebase Real integration started for project: ~s~n", [ProjectId]),
     
     {ok, #state{
         project_id = ProjectId,
@@ -164,20 +164,20 @@ send_sms_via_firebase(PhoneNumber, VerificationCode, State) ->
                 
                 % In a real implementation, Firebase would send the SMS
                 % For now, we'll log the verification code and return success
-                lager:info("SMS verification code ~s sent to ~s (session: ~s)", 
+                io:format("SMS verification code ~s sent to ~s (session: ~s)", 
                           [VerificationCode, PhoneNumber, SessionInfo]),
                 
                 {ok, SessionInfo}
             catch
                 Error:Reason ->
-                    lager:error("Failed to parse Firebase SMS response: ~p:~p", [Error, Reason]),
+                    io:format("Failed to parse Firebase SMS response: ~p:~p~n", [Error, Reason]),
                     {error, parse_error}
             end;
         {ok, {{_, StatusCode, _}, _ResponseHeaders, ResponseBody}} ->
-            lager:error("Firebase SMS API error ~p: ~s", [StatusCode, ResponseBody]),
+            io:format("Firebase SMS API error ~p: ~s~n", [StatusCode, ResponseBody]),
             {error, {firebase_error, StatusCode, ResponseBody}};
         {error, Reason} ->
-            lager:error("Firebase SMS request failed: ~p", [Reason]),
+            io:format("Firebase SMS request failed: ~p~n", [Reason]),
             {error, {request_failed, Reason}}
     end.
 
@@ -205,7 +205,7 @@ verify_phone_via_firebase(PhoneNumber, VerificationCode, SessionInfo, State) ->
                 RefreshToken = maps:get(<<"refreshToken">>, Response, <<>>),
                 LocalId = maps:get(<<"localId">>, Response, <<>>),
                 
-                lager:info("Phone verification successful for ~s", [PhoneNumber]),
+                io:format("Phone verification successful for ~s~n", [PhoneNumber]),
                 
                 {ok, #{
                     <<"phone_number">> => PhoneNumber,
@@ -216,14 +216,14 @@ verify_phone_via_firebase(PhoneNumber, VerificationCode, SessionInfo, State) ->
                 }}
             catch
                 Error:Reason ->
-                    lager:error("Failed to parse Firebase verification response: ~p:~p", [Error, Reason]),
+                    io:format("Failed to parse Firebase verification response: ~p:~p~n", [Error, Reason]),
                     {error, parse_error}
             end;
         {ok, {{_, StatusCode, _}, _ResponseHeaders, ResponseBody}} ->
-            lager:error("Firebase verification API error ~p: ~s", [StatusCode, ResponseBody]),
+            io:format("Firebase verification API error ~p: ~s~n", [StatusCode, ResponseBody]),
             {error, {verification_failed, StatusCode, ResponseBody}};
         {error, Reason} ->
-            lager:error("Firebase verification request failed: ~p", [Reason]),
+            io:format("Firebase verification request failed: ~p~n", [Reason]),
             {error, {request_failed, Reason}}
     end.
 
@@ -234,7 +234,7 @@ create_custom_token_impl(UserId, State) ->
     
     case maps:get(<<"private_key">>, State#state.admin_sdk_config, undefined) of
         undefined ->
-            lager:error("Firebase Admin SDK private key not found"),
+            io:format("Firebase Admin SDK private key not found"),
             {error, no_private_key};
         _PrivateKey ->
             % In a real implementation, we would create a JWT token here
@@ -252,7 +252,7 @@ create_custom_token_impl(UserId, State) ->
             % This is a simplified token - in production, use proper JWT signing
             Token = base64:encode(jsx:encode(Claims)),
             
-            lager:info("Created custom token for user: ~s", [UserId]),
+            io:format("Created custom token for user: ~s~n", [UserId]),
             {ok, Token}
     end.
 
@@ -279,21 +279,21 @@ verify_id_token_impl(IdToken, State) ->
                 
                 case Users of
                     [User | _] ->
-                        lager:info("ID token verified successfully"),
+                        io:format("ID token verified successfully"),
                         {ok, User};
                     [] ->
                         {error, invalid_token}
                 end
             catch
                 Error:Reason ->
-                    lager:error("Failed to parse Firebase token verification response: ~p:~p", [Error, Reason]),
+                    io:format("Failed to parse Firebase token verification response: ~p:~p~n", [Error, Reason]),
                     {error, parse_error}
             end;
         {ok, {{_, StatusCode, _}, _ResponseHeaders, ResponseBody}} ->
-            lager:error("Firebase token verification API error ~p: ~s", [StatusCode, ResponseBody]),
+            io:format("Firebase token verification API error ~p: ~s~n", [StatusCode, ResponseBody]),
             {error, {token_verification_failed, StatusCode}};
         {error, Reason} ->
-            lager:error("Firebase token verification request failed: ~p", [Reason]),
+            io:format("Firebase token verification request failed: ~p~n", [Reason]),
             {error, {request_failed, Reason}}
     end.
 

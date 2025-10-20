@@ -181,8 +181,8 @@ get_user_settings(UserId) ->
 %% Internal functions
 
 do_register_user(UserData) ->
-    PhoneNumber = maps:get(phone_number, UserData),
-    Password = maps:get(password, UserData),
+    PhoneNumber = maps:get(<<"phone_number">>, UserData),
+    Password = maps:get(<<"password">>, UserData),
     
     % Validate input
     case validate_registration_data(UserData) of
@@ -196,12 +196,12 @@ do_register_user(UserData) ->
                     % Prepare user data
                     UserRecord = #{
                         phone_number => PhoneNumber,
-                        username => maps:get(username, UserData, null),
-                        display_name => maps:get(display_name, UserData, null),
-                        email => maps:get(email, UserData, null),
+                        username => maps:get(<<"username">>, UserData, null),
+                        display_name => maps:get(<<"display_name">>, UserData, null),
+                        email => maps:get(<<"email">>, UserData, null),
                         password_hash => PasswordHash,
-                        language => maps:get(language, UserData, "en"),
-                        timezone => maps:get(timezone, UserData, "UTC")
+                        language => maps:get(<<"language">>, UserData, <<"en">>),
+                        timezone => maps:get(<<"timezone">>, UserData, <<"UTC">>)
                     },
                     
                     % Insert user into database
@@ -479,8 +479,8 @@ do_get_user_settings(UserId) ->
 %% Helper functions
 
 validate_registration_data(UserData) ->
-    PhoneNumber = maps:get(phone_number, UserData, undefined),
-    Password = maps:get(password, UserData, undefined),
+    PhoneNumber = maps:get(<<"phone_number">>, UserData, undefined),
+    Password = maps:get(<<"password">>, UserData, undefined),
     
     case {PhoneNumber, Password} of
         {undefined, _} ->

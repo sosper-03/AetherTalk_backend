@@ -53,8 +53,7 @@
 ## Set the time warp mode
 +C multi_time_warp
 
-## Set the time offset
-+T 15
+## Set the time offset (removed conflicting setting)
 
 ## Enable dirty scheduler online
 +scl false
@@ -65,17 +64,7 @@
 ## Set the maximum number of processes
 +P 2097152
 
-## Set the maximum number of atoms in the atom table
-+t 2097152
-
-## Set the size of the atom table
-+h 2097152
-
-## Enable or disable the kernel poll
-+K true
-
-## Set the async thread pool size
-+A 128
+## Removed duplicate settings
 
 ## Set the distribution port range
 -kernel inet_dist_listen_min 9100

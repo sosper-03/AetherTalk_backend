@@ -18,10 +18,10 @@ start(_StartType, _StartArgs) ->
     % Initialize media storage directories
     ok = aethertalk_media:init_storage(),
     
-    % Start the main supervisor
-    case aethertalk_sup:start_link() of
+    % Start the minimal supervisor for testing
+    case aethertalk_sup_minimal:start_link() of
         {ok, Pid} ->
-            io:format("AetherTalk application started successfully~n"),
+            io:format("AetherTalk application started successfully (minimal mode)~n"),
             {ok, Pid};
         Error ->
             io:format("Failed to start AetherTalk application: ~p~n", [Error]),
