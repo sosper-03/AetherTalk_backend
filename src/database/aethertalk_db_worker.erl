@@ -36,22 +36,34 @@ init(Args) ->
     % Connect to PostgreSQL
     ConnectOptions = case SSL of
         true ->
-            % For Neon, use connection string format with endpoint parameter
-            ConnectionString = lists:flatten(io_lib:format(
-                "host=~s port=~p dbname=~s user=~s password=~s sslmode=require options=endpoint=ep-plain-heart-adeyfder",
-                [Host, Port, Database, Username, Password]
-            )),
-            [{connection_string, ConnectionString}];
-        false ->
+            % Supabase PostgreSQL with SSL
             [
                 {host, Host},
                 {port, Port},
                 {database, Database},
                 {username, Username},
                 {password, Password},
-                {ssl, false}
+                {ssl, true},
+                {ssl_opts, [
+                    {verify, verify_none}, % For cloud providers, we trust the certificate
+                    {server_name_indication, disable}
+                ]},
+                {timeout, 5000} % 5 second timeout
+            ];
+        false ->
+            % Local or non-SSL connection
+            [
+                {host, Host},
+                {port, Port},
+                {database, Database},
+                {username, Username},
+                {password, Password},
+                {ssl, false},
+                {timeout, 5000} % 5 second timeout
             ]
     end,
+    
+    io:format("Attempting to connect with options: ~p~n", [ConnectOptions]),
     
     case epgsql:connect(ConnectOptions) of
         {ok, Connection} ->
@@ -59,6 +71,8 @@ init(Args) ->
             {ok, #state{connection = Connection}};
         {error, Reason} ->
             io:format("Database connection failed: ~p~n", [Reason]),
+            io:format("This is expected if you haven't set up your database yet.~n"),
+            io:format("Please follow the AIVEN_SETUP.md guide to set up your database.~n"),
             {stop, {connection_failed, Reason}}
     end.
 
