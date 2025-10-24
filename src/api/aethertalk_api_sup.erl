@@ -23,7 +23,7 @@ init([]) ->
     },
     
     % Get port configurations
-    HttpPort = aethertalk_app:get_env(http_port, 8080),
+    HttpPort = aethertalk_app:get_env(http_port, 9876),
     _HttpsPort = aethertalk_app:get_env(https_port, 8443),
     _WebSocketPort = aethertalk_app:get_env(websocket_port, 8081),
     _MaxConnections = aethertalk_app:get_env(max_connections, 10000),
@@ -71,20 +71,46 @@ init([]) ->
         ]}
     ]),
     
-    ChildSpecs = [
-        % HTTP server
-        #{
-            id => aethertalk_http_listener,
-            start => {cowboy, start_clear, [
-                aethertalk_http_listener,
-                #{socket_opts => [{port, HttpPort}], num_acceptors => 100},
+    % Start HTTP server directly (not as a child)
+    io:format("Attempting to start HTTP server on port ~p~n", [HttpPort]),
+    StartResult = case cowboy:start_clear(aethertalk_http_listener,
+        #{socket_opts => [{port, HttpPort}, {ip, {0,0,0,0}}], num_acceptors => 100},
+        #{env => #{dispatch => Dispatch}}
+    ) of
+        {ok, Pid} ->
+            io:format("HTTP server started successfully on port ~p with PID ~p~n", [HttpPort, Pid]),
+            ok;
+        {error, eaddrinuse} ->
+            io:format("Port ~p is already in use, trying to stop existing listener~n", [HttpPort]),
+            try
+                cowboy:stop_listener(aethertalk_http_listener)
+            catch
+                _:_ -> ok  % Ignore errors if listener doesn't exist
+            end,
+            timer:sleep(1000),
+            case cowboy:start_clear(aethertalk_http_listener,
+                #{socket_opts => [{port, HttpPort}, {ip, {0,0,0,0}}], num_acceptors => 100},
                 #{env => #{dispatch => Dispatch}}
-            ]},
-            restart => permanent,
-            shutdown => 5000,
-            type => worker,
-            modules => [cowboy]
-        },
+            ) of
+                {ok, Pid2} ->
+                    io:format("HTTP server started successfully on port ~p with PID ~p (after retry)~n", [HttpPort, Pid2]),
+                    ok;
+                {error, Reason2} ->
+                    io:format("Failed to start HTTP server after retry: ~p~n", [Reason2]),
+                    {error, {http_start_failed, Reason2}}
+            end;
+        {error, Reason} ->
+            io:format("Failed to start HTTP server: ~p~n", [Reason]),
+            {error, {http_start_failed, Reason}}
+    end,
+    
+    case StartResult of
+        ok -> ok;
+        {error, HttpError} -> 
+            io:format("HTTP server startup failed, continuing without HTTP: ~p~n", [HttpError])
+    end,
+    
+    ChildSpecs = [
         
         % WebSocket connection manager
         #{

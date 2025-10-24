@@ -194,6 +194,16 @@ init([]) ->
             modules => [aethertalk_mfa]
         },
         
+        % Firebase real integration service
+        #{
+            id => aethertalk_firebase_real,
+            start => {aethertalk_firebase_real, start_link, []},
+            restart => permanent,
+            shutdown => 5000,
+            type => worker,
+            modules => [aethertalk_firebase_real]
+        },
+        
         % HTTP/WebSocket API supervisor
         #{
             id => aethertalk_api_sup,

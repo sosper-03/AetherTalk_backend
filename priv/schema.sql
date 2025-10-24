@@ -5,7 +5,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- Users table
+-- Users table (updated with phone verification support)
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -13,10 +13,11 @@ CREATE TABLE users (
     password_hash VARCHAR(255) NOT NULL,
     full_name VARCHAR(255),
     avatar_url TEXT,
-    phone_number VARCHAR(20),
+    phone_number VARCHAR(20) UNIQUE,
     status VARCHAR(20) DEFAULT 'offline' CHECK (status IN ('online', 'offline', 'away', 'busy')),
     last_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     is_verified BOOLEAN DEFAULT FALSE,
+    phone_verified BOOLEAN DEFAULT FALSE,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -610,6 +611,64 @@ FROM chats c
 LEFT JOIN chat_participants cp ON c.id = cp.chat_id AND cp.left_at IS NULL
 LEFT JOIN messages m ON c.id = m.chat_id AND m.is_deleted = FALSE
 GROUP BY c.id, c.type, c.name, c.last_message_at;
+
+-- Phone verifications table
+CREATE TABLE phone_verifications (
+    phone_number VARCHAR(20) PRIMARY KEY,
+    verified BOOLEAN DEFAULT FALSE,
+    verified_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_phone_verifications_verified ON phone_verifications(verified);
+CREATE INDEX idx_phone_verifications_created_at ON phone_verifications(created_at);
+
+-- Phone calls table
+CREATE TABLE phone_calls (
+    call_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    caller_phone VARCHAR(20) NOT NULL,
+    callee_phone VARCHAR(20) NOT NULL,
+    caller_user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    callee_user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    call_type VARCHAR(10) NOT NULL CHECK (call_type IN ('voice', 'video')),
+    status VARCHAR(20) NOT NULL CHECK (status IN ('ringing', 'active', 'ended', 'rejected')),
+    started_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    answered_at TIMESTAMP WITH TIME ZONE,
+    ended_at TIMESTAMP WITH TIME ZONE,
+    duration INTEGER, -- Duration in seconds
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_phone_calls_caller_user ON phone_calls(caller_user_id);
+CREATE INDEX idx_phone_calls_callee_user ON phone_calls(callee_user_id);
+CREATE INDEX idx_phone_calls_status ON phone_calls(status);
+CREATE INDEX idx_phone_calls_started_at ON phone_calls(started_at);
+CREATE INDEX idx_phone_calls_caller_phone ON phone_calls(caller_phone);
+CREATE INDEX idx_phone_calls_callee_phone ON phone_calls(callee_phone);
+
+-- Add phone number index to users table
+CREATE INDEX idx_users_phone_number ON users(phone_number);
+CREATE INDEX idx_users_phone_verified ON users(phone_verified);
+
+-- User translation settings table
+CREATE TABLE user_translation_settings (
+    user_id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+    enabled BOOLEAN DEFAULT FALSE,
+    source_language VARCHAR(10) DEFAULT 'auto',
+    target_language VARCHAR(10) DEFAULT 'en',
+    voice VARCHAR(50) DEFAULT 'en-US-female-1',
+    text_output BOOLEAN DEFAULT TRUE,
+    voice_output BOOLEAN DEFAULT TRUE,
+    auto_detect BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_user_translation_settings_enabled ON user_translation_settings(enabled);
+CREATE INDEX idx_user_translation_settings_source_lang ON user_translation_settings(source_language);
+CREATE INDEX idx_user_translation_settings_target_lang ON user_translation_settings(target_language);
 
 -- Insert default system user for system messages
 INSERT INTO users (id, username, email, password_hash, full_name, is_verified, is_active)

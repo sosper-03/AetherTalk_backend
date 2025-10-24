@@ -29,42 +29,89 @@ init(Args) ->
     Database = proplists:get_value(database, Args, "aethertalk"),
     Username = proplists:get_value(username, Args, "aethertalk"),
     Password = proplists:get_value(password, Args, ""),
+    SSL = proplists:get_value(ssl, Args, false),
     
-    ConnectOptions = [
-        {host, Host},
-        {port, Port},
-        {database, Database},
-        {username, Username},
-        {password, Password},
-        {timeout, 5000},
-        {ssl, false}
-    ],
+    io:format("Database worker starting - Host: ~s:~p, DB: ~s, User: ~s~n", [Host, Port, Database, Username]),
+    
+    % Connect to PostgreSQL
+    ConnectOptions = case SSL of
+        true ->
+            % Supabase PostgreSQL with SSL
+            [
+                {host, Host},
+                {port, Port},
+                {database, Database},
+                {username, Username},
+                {password, Password},
+                {ssl, true},
+                {ssl_opts, [
+                    {verify, verify_none}, % For cloud providers, we trust the certificate
+                    {server_name_indication, disable}
+                ]},
+                {timeout, 5000} % 5 second timeout
+            ];
+        false ->
+            % Local or non-SSL connection
+            [
+                {host, Host},
+                {port, Port},
+                {database, Database},
+                {username, Username},
+                {password, Password},
+                {ssl, false},
+                {timeout, 5000} % 5 second timeout
+            ]
+    end,
+    
+    io:format("Attempting to connect with options: ~p~n", [ConnectOptions]),
     
     case epgsql:connect(ConnectOptions) of
         {ok, Connection} ->
-            io:format("Database worker connected successfully~n"),
+            io:format("Database connection established successfully~n"),
             {ok, #state{connection = Connection}};
         {error, Reason} ->
-            io:format("Failed to connect to database: ~p~n", [Reason]),
-            {stop, Reason}
+            io:format("Database connection failed: ~p~n", [Reason]),
+            io:format("This is expected if you haven't set up your database yet.~n"),
+            io:format("Please follow the AIVEN_SETUP.md guide to set up your database.~n"),
+            {stop, {connection_failed, Reason}}
     end.
 
-handle_call({query, SQL, Params, Timeout}, _From, #state{connection = Conn} = State) ->
-    Result = case epgsql:equery(Conn, SQL, Params, Timeout) of
-        {ok, Columns, Rows} ->
-            {ok, {Columns, Rows}};
-        {ok, Count} ->
-            {ok, Count};
-        {ok, Count, Columns, Rows} ->
-            {ok, {Count, Columns, Rows}};
-        {error, Error} ->
-            io:format("Database query error: ~p~n", [Error]),
-            {error, Error}
+handle_call({query, SQL, Params, _Timeout}, _From, #state{connection = Connection} = State) ->
+    io:format("Database query: ~s with params ~p~n", [SQL, Params]),
+    
+    Result = case Connection of
+        undefined ->
+            {error, no_connection};
+        _ ->
+            case epgsql:equery(Connection, SQL, Params) of
+                {ok, Columns, Rows} ->
+                    {ok, {Columns, Rows}};
+                {ok, Count} when is_integer(Count) ->
+                    {ok, Count};
+                {error, Reason} ->
+                    {error, Reason};
+                Other ->
+                    Other
+            end
     end,
+    
     {reply, Result, State};
 
-handle_call({transaction, Fun}, _From, #state{connection = Conn} = State) ->
-    Result = epgsql:with_transaction(Conn, Fun),
+handle_call({transaction, Fun}, _From, #state{connection = Connection} = State) ->
+    io:format("Database transaction~n"),
+    
+    Result = case Connection of
+        undefined ->
+            {error, no_connection};
+        _ ->
+            try
+                epgsql:with_transaction(Connection, Fun)
+            catch
+                Error:Reason ->
+                    {error, {Error, Reason}}
+            end
+    end,
+    
     {reply, Result, State};
 
 handle_call(_Request, _From, State) ->

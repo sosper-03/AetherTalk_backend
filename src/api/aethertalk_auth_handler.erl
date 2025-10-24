@@ -15,8 +15,12 @@ init(Req0, State) ->
 handle_request(<<"POST">>, <<"/api/v1/auth/register">>, Req0, State) ->
     {ok, Body, Req1} = cowboy_req:read_body(Req0),
     
+    % Debug logging
+    io:format("Received registration request body: ~p~n", [Body]),
+    
     Result = try
         Data = jsx:decode(Body, [return_maps]),
+        io:format("Parsed JSON data: ~p~n", [Data]),
         case aethertalk_auth:register(Data) of
             {ok, User} ->
                 Response = #{
@@ -26,6 +30,7 @@ handle_request(<<"POST">>, <<"/api/v1/auth/register">>, Req0, State) ->
                 },
                 {201, jsx:encode(Response)};
             {error, Reason} ->
+                io:format("Registration error: ~p~n", [Reason]),
                 Response = #{
                     success => false,
                     error => Reason
@@ -33,7 +38,8 @@ handle_request(<<"POST">>, <<"/api/v1/auth/register">>, Req0, State) ->
                 {400, jsx:encode(Response)}
         end
     catch
-        _:_ ->
+        Error:ErrorReason ->
+            io:format("JSON parsing error: ~p:~p~n", [Error, ErrorReason]),
             {400, jsx:encode(#{error => <<"Invalid JSON">>})}
     end,
     
